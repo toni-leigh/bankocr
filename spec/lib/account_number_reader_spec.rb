@@ -7,7 +7,7 @@ describe AccountNumberReader do
 
 	end
 
-	it "should create an array of account number objects" do
+	it "should create account number objects" do
 
 	end
 
