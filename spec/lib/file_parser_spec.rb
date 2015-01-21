@@ -1,3 +1,3 @@
-describe FileParser
+describe FileParser do
 
 end
