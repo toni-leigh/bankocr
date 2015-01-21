@@ -14,4 +14,8 @@ class AccountNumberReader
 		
 	end
 
+	def create_account_number_collection
+
+	end
+
 end
