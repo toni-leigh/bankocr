@@ -11,4 +11,8 @@ describe AccountNumberReader do
 
 	end
 
+	it "should create a number of account numbers which is one quarter of the number of lines in the file" do
+
+	end
+
 end
