@@ -5,9 +5,11 @@ describe AccountNumberReader do
 
 	before { subject.read_numbers_file }
 
-	it "should read the file from source into memory" do
+	it "should read the file from source into memory as a string" do
 
-		expect ( subject.account_numbers_string.length ).to be > 0
+		expect( subject.account_numbers_string ).to be_kind_of (String)
+
+		expect( subject.account_numbers_string.length ).to be > 0
 
 	end
 
