@@ -3,9 +3,9 @@ require "account_number_reader"
 
 describe AccountNumberReader do
 
-	it "should read the file from source into memory as a string" do
+	before { subject.read_numbers_file }
 
-		subject.read_numbers_file
+	it "should read the file from source into memory as a string" do
 
 		expect( IO.read(subject.account_numbers_source).length ).to be > 0
 
