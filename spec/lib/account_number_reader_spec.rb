@@ -7,7 +7,7 @@ describe AccountNumberReader do
 
 	it "should read the file from source into memory as a string" do
 
-		expect( IO.read(subject.account_numbers_source) ).to be > 0
+		expect( IO.read(subject.account_numbers_source).length ).to be > 0
 
 		expect( subject.account_numbers_string ).to be_kind_of (String)
 
