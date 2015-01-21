@@ -1,0 +1,2 @@
+# bankocr
+Bank OCR Kata
