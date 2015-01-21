@@ -6,7 +6,9 @@ class AccountNumberReader
 
 		@account_numbers_source = account_numbers_source
 
-		@account_numbers = [1]
+		@account_numbers = []
+
+		@account_number_line_count = 4
 
 	end
 
@@ -17,6 +19,22 @@ class AccountNumberReader
 	end
 
 	def create_account_number_collection
+
+		account_number_string = ''
+
+		@account_numbers_string.lines.to_a.each_with_index do |line,index|
+
+			account_number_string += line
+			
+			if (index % @account_number_line_count == (@account_number_line_count - 1)) then				
+
+				@account_numbers << AccountNumber.new(account_number_string)
+
+				account_number_string = ''
+
+			end
+
+		end
 
 	end
 
