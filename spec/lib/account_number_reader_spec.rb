@@ -23,6 +23,8 @@ describe AccountNumberReader do
 
 		expect( subject.account_numbers.length ).to be > 0
 
+		expect( subject.account_numbers_string.lines.to_a.length ).to be == subject.account_numbers.length * 4
+
 	end
 
 end
