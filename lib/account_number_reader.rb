@@ -9,6 +9,8 @@ class AccountNumberReader
 	end
 
 	def read_numbers_file
+
+		@account_numbers_string = IO.read(account_numbers_source)
 		
 	end
 
