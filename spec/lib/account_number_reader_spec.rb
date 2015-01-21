@@ -3,9 +3,9 @@ require "account_number_reader"
 
 describe AccountNumberReader do
 
-	before { subject.read_numbers_file }
-
 	it "should read the file from source into memory as a string" do
+
+		subject.read_numbers_file
 
 		expect( IO.read(subject.account_numbers_source).length ).to be > 0
 
@@ -16,10 +16,6 @@ describe AccountNumberReader do
 	end
 
 	xit "should create account number objects" do
-
-	end
-
-	xit "should create a number of account numbers which is one quarter of the number of lines in the file" do
 
 	end
 
