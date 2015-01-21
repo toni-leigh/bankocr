@@ -7,7 +7,7 @@ describe AccountNumberReader do
 
 	it "should read the file from source into memory" do
 
-		expect { accountNumbersString.length }.to be > 0
+		expect ( accountNumbersString.length ).to be > 0
 
 	end
 
