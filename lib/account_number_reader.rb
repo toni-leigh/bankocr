@@ -6,7 +6,7 @@ class AccountNumberReader
 
 		@account_numbers_source = account_numbers_source
 
-		@account_numbers = []
+		@account_numbers = [1]
 
 	end
 
