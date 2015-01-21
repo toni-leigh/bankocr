@@ -1,7 +1,7 @@
 require "spec_helper"
-require "file_parser"
+require "account_number_reader"
 
-describe FileParser do
+describe AccountNumberReader do
 
 	it "should read the file from source into memory" do
 
