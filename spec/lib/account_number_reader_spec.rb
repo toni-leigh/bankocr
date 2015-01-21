@@ -3,9 +3,11 @@ require "account_number_reader"
 
 describe AccountNumberReader do
 
+	before { subject.readNumbersFile }
+
 	it "should read the file from source into memory" do
 
-		expect { subject.readNumbers }.to change { subject.fileString.length > 0 }.from(false).to(true)
+		expect { accountNumbersString.length }.to be > 0
 
 	end
 
