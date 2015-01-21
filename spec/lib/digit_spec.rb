@@ -15,7 +15,7 @@ describe Digit do
 
 	end
 
-	it "should have a string length of 27" do
+	it "should have a string length of 9" do
 
 	end
 
