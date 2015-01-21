@@ -15,7 +15,15 @@ describe AccountNumberReader do
 
 	end
 
-	xit "should create account number objects" do
+	it "should create account number objects" do
+
+		subject.create_account_number_collection
+
+		expect( subject.account_numbers ).to be_kind_of (Array)
+
+		expect( subject.account_numbers.length ).to be > 0
+
+		expect ( subject.account_numbers_string.lines ).to be == subject.account_numbers.length * 4
 
 	end
 
