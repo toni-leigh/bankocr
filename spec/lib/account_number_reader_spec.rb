@@ -3,8 +3,6 @@ require "account_number_reader"
 
 describe AccountNumberReader do
 
-	before { subject.read_numbers_file }
-
 	it "should read the file from source into memory as a string" do
 
 		expect( IO.read(subject.account_numbers_source).length ).to be > 0
@@ -16,8 +14,6 @@ describe AccountNumberReader do
 	end
 
 	it "should create account number objects" do
-
-		subject.create_account_number_collection
 
 		expect( subject.account_numbers ).to be_kind_of (Array)
 
