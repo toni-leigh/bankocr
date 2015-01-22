@@ -49,7 +49,7 @@ describe AccountNumber do
 
 		expect( valid_account_number ).to be_valid
 
-		expect( invalid_account_number ).to be_invalid
+		expect( invalid_account_number ).not_to be_valid
 
 	end 
 	
