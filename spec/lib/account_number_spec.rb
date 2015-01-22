@@ -24,5 +24,9 @@ describe AccountNumber do
 		end
 
 	end
+
+	xit "should convert the initial string into 9 valid Digits" do
+
+	end
 	
 end
