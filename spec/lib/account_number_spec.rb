@@ -32,5 +32,13 @@ describe AccountNumber do
 		end
 
 	end
+
+	it "should have a humanised output comprising of a formatted string" do
+
+		expect( account_number.humanised_output.length ).to be == 9
+
+		expect( account_number.humanised_output ).to be == '000000000'
+
+	end
 	
 end
