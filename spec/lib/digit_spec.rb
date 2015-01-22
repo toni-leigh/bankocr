@@ -3,7 +3,7 @@ require "digit"
 
 describe Digit do
 
-	let(:digit) { Digit.new }
+	let(:digit) { Digit.new(' _ | ||_|') }
 
 	it "should have an integer value" do
 
