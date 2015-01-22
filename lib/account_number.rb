@@ -1,10 +1,12 @@
 class AccountNumber
 
-	attr_accessor :account_number_string, :digits
+	attr_accessor :account_number_string, :digits, :humanised_output
 
 	def initialize(account_number_string = '')
 
 		@account_number_string = account_number_string
+
+		@humanised_output = ''
 
 		@digits = Array.new(9)
 
@@ -17,6 +19,8 @@ class AccountNumber
 		@digits.each_with_index do |digit,index|
 
 			@digits[index] = Digit.new(retrieve_digit_string(index))
+
+			@humanised_output += "#{@digits[index].number}"
 
 		end
 
