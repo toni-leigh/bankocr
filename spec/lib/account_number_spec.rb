@@ -52,5 +52,13 @@ describe AccountNumber do
 		expect( invalid_account_number ).not_to be_valid
 
 	end 
+
+	it "should have ERR in it's humanised output if it fails the checksum" do
+
+		expect( invalid_account_number.humanised_output ).to include("ERR")
+
+		expect( valid_account_number.humanised_output ).not_to include("ERR")
+
+	end
 	
 end
