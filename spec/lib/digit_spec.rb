@@ -19,4 +19,8 @@ describe Digit do
 
 	end
 
+	xit "should convert any strings for any digit into integers" do
+
+	end
+
 end
