@@ -28,7 +28,7 @@ class AccountNumberReader
 
 		@account_numbers_string.lines.to_a.each_with_index do |line,index|
 
-			account_number_string += line
+			account_number_string += line.chomp
 			
 			if (index % ACCOUNT_NUMBER_LINE_COUNT == (ACCOUNT_NUMBER_LINE_COUNT - 1)) then				
 
