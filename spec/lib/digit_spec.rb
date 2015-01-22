@@ -3,19 +3,29 @@ require "digit"
 
 describe Digit do
 
-	xit "should have an integer value" do
+	let(:digit) { Digit.new }
+
+	it "should have an integer value" do
+
+		expect( digit.number ).to be_kind_of (Integer)
 
 	end
 
-	xit "should be in the range of 0 and 9" do
+	it "should be in the range of 0 and 9" do
+		
+		expect( digit.number ).to be_between(0,9)
 
 	end
 
-	xit "should have a string representation" do
+	it "should have a string representation" do
+
+		expect( digit.string ).to be_kind_of (String)
 
 	end
 
-	xit "should have a string length of 9" do
+	it "should have a string length of 9" do
+
+		expect( digit.string.length ).to be == 9
 
 	end
 
