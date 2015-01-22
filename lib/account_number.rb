@@ -14,6 +14,8 @@ class AccountNumber
 
 		validate
 
+		prepend_code
+
 	end
 
 	def convert_account_number
@@ -52,6 +54,10 @@ class AccountNumber
 
 	def valid?
 		@valid 
+	end
+
+	def prepend_code 
+		@humanised_output += ' ERR' unless valid?
 	end
 
 end
