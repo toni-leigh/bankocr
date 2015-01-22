@@ -2,13 +2,13 @@ class AccountNumberReader
 
 	attr_accessor :account_numbers_string, :account_numbers_source, :account_numbers
 
+	ACCOUNT_NUMBER_LINE_COUNT = 4
+
 	def initialize(account_numbers_source = 'data/use_case_1.txt')
 
 		@account_numbers_source = account_numbers_source
 
 		@account_numbers = []
-
-		@account_number_line_count = 4
 
 	end
 
@@ -26,7 +26,7 @@ class AccountNumberReader
 
 			account_number_string += line
 			
-			if (index % @account_number_line_count == (@account_number_line_count - 1)) then				
+			if (index % ACCOUNT_NUMBER_LINE_COUNT == (ACCOUNT_NUMBER_LINE_COUNT - 1)) then				
 
 				@account_numbers << AccountNumber.new(account_number_string)
 
