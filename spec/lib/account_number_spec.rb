@@ -13,7 +13,15 @@ describe AccountNumber do
 
 	end
 
-	xit "should have an array of 9 digit objects" do
+	it "should have an array of 9 digit objects" do
+
+		expect( account_number.digits ).to be_kind_of (Array)
+
+		expect( account_number.digits.length ).to be == 9
+
+		(0..8).to_a.each do |index|
+			expect(account_number.digits[index]).to be_kind_of (Digit)
+		end
 
 	end
 	
