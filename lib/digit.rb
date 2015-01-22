@@ -15,8 +15,8 @@ class Digit
 	}
 
 	def initialize(string = '')
-		@number = 1
 		@string = string
+		@number = convert_to_integer
 	end
 
 	def convert_to_integer
