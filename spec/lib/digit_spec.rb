@@ -31,7 +31,7 @@ describe Digit do
 
 	it "should convert any strings for any digit into integers" do
 
-		Digit.get_string_representations.each do |key,value|
+		Digit::VALID_STRING_REPRESENTATIONS.each do |key,value|
 			digit = Digit.new(key)
 			expect( digit.convert_to_integer ).to be == value
 		end
