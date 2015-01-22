@@ -1,6 +1,6 @@
 class AccountNumber
 
-	attr_accessor :account_number_string, :digits, :humanised_output
+	attr_accessor :account_number_string, :digits, :humanised_output, :valid
 
 	def initialize(account_number_string = '')
 
@@ -11,6 +11,8 @@ class AccountNumber
 		@digits = Array.new(9)
 
 		convert_account_number
+
+		validate
 
 	end
 
@@ -34,6 +36,22 @@ class AccountNumber
 			@account_number_string[position * 3 + 54,3]
 		].join('')
 
+	end
+
+	def validate
+
+		checksum = 0;
+
+		(0..8).each do |i|
+ 			checksum += (@digits[8-i].number*(i+1))
+		end
+
+		@valid = ( checksum % 11 == 0 )
+
+	end
+
+	def valid?
+		@valid 
 	end
 
 end
