@@ -29,7 +29,12 @@ describe Digit do
 
 	end
 
-	xit "should convert any strings for any digit into integers" do
+	it "should convert any strings for any digit into integers" do
+
+		Digit.get_string_representations.each do |key,value|
+			digit = Digit.new(key)
+			expect( digit.convert_to_integer ).to be == value
+		end
 
 	end
 
