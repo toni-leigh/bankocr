@@ -10,6 +10,10 @@ class AccountNumberReader
 
 		@account_numbers = []
 
+		read_numbers_file
+
+		create_account_number_collection
+
 	end
 
 	def read_numbers_file
