@@ -5,6 +5,10 @@ describe Digit do
 
 	let(:digit) { Digit.new(' _ | ||_|') }
 
+	let(:valid_digit) { Digit.new(' _ | ||_|') }  
+
+	let(:invalid_digit) { Digit.new('|_ | ||_|') }  
+
 	it "should have an integer value" do
 
 		expect( digit.number ).to be_kind_of (Integer)
@@ -35,6 +39,14 @@ describe Digit do
 			digit = Digit.new(key)
 			expect( digit.convert_to_integer ).to be == value
 		end
+
+	end
+
+	it "should know whether or not it's string represents a valid integer" do
+
+		expect( valid_digit ).to be_valid
+
+		expect( invalid_digit ).not_to be_valid
 
 	end
 
