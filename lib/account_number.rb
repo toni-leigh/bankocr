@@ -1,6 +1,6 @@
 class AccountNumber
 
-	attr_accessor :account_number_string, :digits, :humanised_output, :salvagable, :valid
+	attr_accessor :account_number_string, :alternate_numbers, :digits, :salvagable, :valid
 
 	def initialize(account_number_string = '')
 
@@ -9,6 +9,8 @@ class AccountNumber
 		@humanised_output = ''
 
 		@digits = Array.new(9)
+
+		@alternate_numbers = []
 
 		convert_account_number
 

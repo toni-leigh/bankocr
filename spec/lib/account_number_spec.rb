@@ -95,7 +95,9 @@ describe AccountNumber do
 
 	end
 
-	xit "should have an array of alternative numbers" do
+	it "should have an array of alternative numbers" do
+
+		expect( account_number.alternate_numbers ).to be_kind_of (Array)
 
 	end
 
