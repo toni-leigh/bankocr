@@ -7,7 +7,9 @@ describe Digit do
 
 	let(:valid_digit) { Digit.new(' _ | ||_|') }  
 
-	let(:invalid_digit) { Digit.new('|_ | ||_|') }  
+	let(:salvagable_digit) { Digit.new('|_ | ||_|') }  
+
+	let(:invalid_digit) { Digit.new('|||||||_|') }
 
 	it "should have an integer value" do
 
@@ -60,21 +62,29 @@ describe Digit do
 
 	end
 
-	xit "should return possible alternatives if it can be ambiguous" do
+	it "should return possible alternatives if it can be ambiguous" do
 
-		
+		expect( digit.get_alternates(0) ).to be kind_of (Array)
 
-	end
+		expect( digit.get_alternates(5).length ).to be == 2
 
-	xit "should know if it's salvagable or not, i.e. if there's just one char difference between itself and a valid string" do
-
-
+		expect( digit.get_alternates(9).length ).to be == 3
 
 	end
 
-	xit "should return a valid number if it is salvagable" do
+	it "should know if it's salvagable or not, i.e. if there's just one char difference between itself and a valid string" do
 
+		expect( salvagable_digit ).to be_salvagable
 
+		expect( invalid_digit ).not_to be_salvagable
+
+	end
+
+	it "should return a valid number if it is salvagable" do
+
+		expect( salvagable_digit.salvage ).to be kind_of(Integer)
+
+		expect( invalid_digit.salvage ).to be == nil
 
 	end
 
