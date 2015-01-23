@@ -70,6 +70,8 @@ describe Digit do
 
 		expect( digit.get_alternates(9).length ).to be == 3
 
+		expect( digit.get_alternates(4).length ).to be == nil
+
 	end
 
 	it "should know if it's salvagable or not, i.e. if there's just one char difference between itself and a valid string" do
