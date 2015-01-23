@@ -60,4 +60,16 @@ describe Digit do
 
 	end
 
+	xit "should return possible alternatives if it can be ambiguous" do
+
+		
+
+	end
+
+	xit "should know if it's salvagable or not, i.e. if there's just one char difference between itself and a valid string" do
+
+
+
+	end
+
 end

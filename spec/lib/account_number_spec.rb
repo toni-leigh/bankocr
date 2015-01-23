@@ -9,9 +9,11 @@ describe AccountNumber do
 
 	let(:invalid_account_number) { AccountNumber.new(' _  _  _  _  _  _  _  _  _   || || || || || || || ||_|  ||_||_||_||_||_||_||_||_|                           ') }
 
-	let(:salvagable_account_number) { AccountNumber.new('||| _  _  _  _  _  _  _  _   || || || || || || || || |  ||_||_||_||_||_||_||_||_|                           ') }
+	let(:salvagable_account_number) { AccountNumber.new('    _  _  _  _  _  _     _ |_||_|| || ||_ | |  |  ||_   | _||_||_||_|  |  |  | _|                           ') }
 
 	let(:illegible_account_number) { AccountNumber.new('||||_  _  _  _  _  _  _  _   || || || || || || || || |  ||_||_||_||_||_||_||_||_|                           ') }
+
+	let(:ambiguous_invalid_number) { AccountNumber.new(' _  _  _  _  _  _  _  _  _ |_ |_ |_ |_ |_ |_ |_ |_ |_  _| _| _| _| _| _| _| _| _|                           ') }
 
 	it "should have a string that represents the full number of 108 chars" do
 
@@ -90,6 +92,34 @@ describe AccountNumber do
 		expect( salvagable_account_number ).not_to be_legible
 
 		expect( illegible_account_number ).not_to be_salvagable
+
+	end
+
+	xit "should have an array of alternative numbers" do
+
+	end
+
+	xit "should have an alternative array of more than one number if it's an ambiguous error" do
+
+	end
+
+	xit "should have exactly one alternative if it is an ILL that is actually salvagable" do
+
+	end
+
+	xit "should check it's ambiguity" do
+
+		expect( valid_account_number ).to be_ambiguous
+
+		expect( illegible_account_number ).not_to be_ambiguous
+
+	end
+
+	xit "should have AMB in to_s return if it is ambiguous" do
+
+		expect( valid_account_number.to_s ).not_to include("AMB")
+
+		expect( illegible_account_number.to_s ).to include("AMB")
 
 	end
 	
