@@ -72,6 +72,12 @@ class AccountNumber
 
 		end
 
+		if @legible
+			output_string += ' ERR' unless @valid
+		else
+			output_string += ' ILL'
+		end
+
 		output_string
 
 	end
