@@ -64,13 +64,13 @@ describe Digit do
 
 	it "should return possible alternatives if it can be ambiguous" do
 
-		expect( digit.get_alternates(0) ).to be kind_of (Array)
+		expect( digit.get_alternates(0) ).to be_kind_of (Array)
 
 		expect( digit.get_alternates(5).length ).to be == 2
 
 		expect( digit.get_alternates(9).length ).to be == 3
 
-		expect( digit.get_alternates(4).length ).to be == nil
+		expect( digit.get_alternates(4) ).to be == nil
 
 	end
 
