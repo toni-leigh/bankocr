@@ -50,4 +50,14 @@ describe Digit do
 
 	end
 
+	it "should output itself as a char, including a '?' if it is invalid" do
+
+		expect( digit.to_s ).to be_kind_of (String)
+
+		expect( valid_digit.to_s ).to be == '0'
+
+		expect( invalid_digit.to_s ).to be =='?'
+
+	end
+
 end
