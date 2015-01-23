@@ -78,5 +78,9 @@ describe AccountNumber do
 		expect( invalid_account_number.to_s ).to include("ERR")
 
 	end
+
+	xit "should know if it is salvagable, i.e. if it has one and one only illegible digit" do
+
+	end
 	
 end
