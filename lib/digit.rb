@@ -14,7 +14,7 @@ class Digit
 		' _ |_| _|' => 9
 	}
 
-	AMBIGUOUS_DIGITS = [
+	AMBIGUOUS_DIGITS = {
 		0 => [8],
 		1 => [7],
 		3 => [9],
@@ -23,7 +23,7 @@ class Digit
 		7 => [1],
 		8 => [0,6,9],
 		9 => [3,5,8]
-	]
+	}
 
 	def initialize(string = '')
 		@string = string
@@ -36,6 +36,10 @@ class Digit
 			@valid = true
 		end
 		VALID_STRING_REPRESENTATIONS[@string]
+	end
+
+	def get_alternates(target = nil)
+		AMBIGUOUS_DIGITS[target]
 	end
 
 	def valid?
