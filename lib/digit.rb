@@ -14,6 +14,17 @@ class Digit
 		' _ |_| _|' => 9
 	}
 
+	AMBIGUOUS_DIGITS = [
+		0 => [8],
+		1 => [7],
+		3 => [9],
+		5 => [6,9],
+		6 => [5,8],
+		7 => [1],
+		8 => [0,6,9],
+		9 => [3,5,8]
+	]
+
 	def initialize(string = '')
 		@string = string
 		@number = convert_to_integer
