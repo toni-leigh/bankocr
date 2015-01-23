@@ -9,6 +9,8 @@ describe AccountNumber do
 
 	let(:invalid_account_number) { AccountNumber.new(' _  _  _  _  _  _  _  _  _   || || || || || || || ||_|  ||_||_||_||_||_||_||_||_|                           ') }
 
+	let(:salvagable_account_number) { AccountNumber.new('||| _  _  _  _  _  _  _  _   || || || || || || || || |  ||_||_||_||_||_||_||_||_|                           ') }
+
 	let(:illegible_account_number) { AccountNumber.new('||||_  _  _  _  _  _  _  _   || || || || || || || || |  ||_||_||_||_||_||_||_||_|                           ') }
 
 	it "should have a string that represents the full number of 108 chars" do
@@ -79,7 +81,15 @@ describe AccountNumber do
 
 	end
 
-	xit "should know if it is salvagable, i.e. if it has one and one only illegible digit" do
+	it "should know if it is salvagable, i.e. if it has one and one only illegible digit" do
+
+		expect( valid_account_number ).to be_salvagable
+
+		expect( salvagable_account_number ).to be_salvagable
+
+		expect( salvagable_account_number ).not_to be_legible
+
+		expect( illegible_account_number ).not_to be_salvagable
 
 	end
 	
