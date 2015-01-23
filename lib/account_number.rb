@@ -1,6 +1,6 @@
 class AccountNumber
 
-	attr_accessor :account_number_string, :digits, :humanised_output, :legible, :valid
+	attr_accessor :account_number_string, :digits, :humanised_output, :salvagable, :valid
 
 	def initialize(account_number_string = '')
 
@@ -42,13 +42,20 @@ class AccountNumber
 
 		@legible = true
 
+		count_illegible = 0
+
+		@salvagable = true
+
 		(0..8).each do |i|
-			if @digits[8-i].number == nil then
+			if @digits[8-i].number == nil
+				count_illegible += 1
 				@legible = false
 			else
  				checksum += (@digits[8-i].number*(i+1))
  			end
 		end
+
+		@salvagable = false unless count_illegible < 2
 
 		@valid = ( checksum % 11 == 0 )
 
@@ -60,6 +67,10 @@ class AccountNumber
 
 	def legible?
 		@legible 
+	end
+
+	def salvagable?
+		@salvagable 
 	end
 
 	def to_s 
