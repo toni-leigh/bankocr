@@ -45,7 +45,7 @@ class AccountNumber
 		checksum = 0;
 
 		(0..8).each do |i|
- 			checksum += (@digits[8-i].number*(i+1))
+ 			checksum += (@digits[8-i].number*(i+1)) unless @digits[8-i].number == nil
 		end
 
 		@valid = ( checksum % 11 == 0 )
