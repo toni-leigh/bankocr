@@ -24,7 +24,7 @@ class AccountNumber
 
 			@digits[index] = Digit.new(retrieve_digit_string(index))
 
-			@humanised_output += "#{@digits[index].number}"
+			@humanised_output += "#{@digits[index].to_s}"
 
 		end
 
