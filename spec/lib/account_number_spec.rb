@@ -37,11 +37,11 @@ describe AccountNumber do
 
 	end
 
-	it "should have a humanised output comprising of a formatted string" do
+	it "should have a to_s method that returns a human readable version of the converted account number" do
 
-		expect( account_number.humanised_output.length ).to be == 9
+		expect( account_number.to_s.length ).to be == 9
 
-		expect( account_number.humanised_output ).to be == '000000000'
+		expect( account_number.to_s ).to be == '000000000'
 
 	end
 
@@ -53,11 +53,11 @@ describe AccountNumber do
 
 	end 
 
-	it "should have ERR in it's humanised output if it fails the checksum" do
+	it "should have ERR in to_s return if it fails the checksum" do
 
-		expect( invalid_account_number.humanised_output ).to include("ERR")
+		expect( invalid_account_number.to_s ).to include("ERR")
 
-		expect( valid_account_number.humanised_output ).not_to include("ERR")
+		expect( valid_account_number.to_s ).not_to include("ERR")
 
 	end
 	
