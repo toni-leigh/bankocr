@@ -7,7 +7,9 @@ describe AccountNumber do
 
 	let(:valid_account_number) { AccountNumber.new(' _  _  _  _  _  _  _  _    | || || || || || || ||_   ||_||_||_||_||_||_||_| _|  |                           ') }
 
-	let(:invalid_account_number) { AccountNumber.new('    _  _  _  _  _  _  _  _   || || || || || || || || |  ||_||_||_||_||_||_||_||_|                           ') }
+	let(:invalid_account_number) { AccountNumber.new(' _  _  _  _  _  _  _  _  _   || || || || || || || ||_|  ||_||_||_||_||_||_||_||_|                           ') }
+
+	let(:illegible_account_number) { AccountNumber.new('||||_  _  _  _  _  _  _  _   || || || || || || || || |  ||_||_||_||_||_||_||_||_|                           ') }
 
 	it "should have a string that represents the full number of 108 chars" do
 
@@ -45,6 +47,22 @@ describe AccountNumber do
 
 	end
 
+	it "should checks its legibility by looking for invalid digits" do
+
+		expect( valid_account_number ).to be_legible
+
+		expect( illegible_account_number ).not_to be_legible
+
+	end
+
+	it "should have ILL in to_s return if it is illegible" do
+
+		expect( valid_account_number.to_s ).not_to include("ILL")
+
+		expect( illegible_account_number.to_s ).to include("ILL")
+
+	end
+
 	it "should validate itself by performing a checksum" do
 
 		expect( valid_account_number ).to be_valid
@@ -55,9 +73,9 @@ describe AccountNumber do
 
 	it "should have ERR in to_s return if it fails the checksum" do
 
-		expect( invalid_account_number.to_s ).to include("ERR")
-
 		expect( valid_account_number.to_s ).not_to include("ERR")
+
+		expect( invalid_account_number.to_s ).to include("ERR")
 
 	end
 	
