@@ -30,4 +30,12 @@ class Digit
 	def valid?
 		@valid
 	end
+
+	def to_s
+		if @valid then
+			"#{@number}"
+		else
+			"?"
+		end
+	end
 end
