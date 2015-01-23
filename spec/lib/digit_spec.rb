@@ -72,4 +72,10 @@ describe Digit do
 
 	end
 
+	xit "should return a valid number if it is salvagable" do
+
+
+
+	end
+
 end
