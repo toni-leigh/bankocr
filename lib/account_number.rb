@@ -14,8 +14,6 @@ class AccountNumber
 
 		validate
 
-		prepend_code
-
 	end
 
 	def convert_account_number
@@ -23,8 +21,6 @@ class AccountNumber
 		@digits.each_with_index do |digit,index|
 
 			@digits[index] = Digit.new(retrieve_digit_string(index))
-
-			@humanised_output += "#{@digits[index].to_s}"
 
 		end
 
@@ -56,8 +52,18 @@ class AccountNumber
 		@valid 
 	end
 
-	def prepend_code 
-		@humanised_output += ' ERR' unless valid?
+	def to_s 
+
+		output_string = ''
+
+		@digits.each do |digit|
+
+			output_string += "#{digit.to_s}"
+
+		end
+
+		output_string
+
 	end
 
 end
