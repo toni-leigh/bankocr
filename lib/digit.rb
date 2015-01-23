@@ -1,5 +1,5 @@
 class Digit
-	attr_accessor :number, :string, :string_representations
+	attr_accessor :number, :string, :string_representations, :valid
 
 	VALID_STRING_REPRESENTATIONS = {
 		' _ | ||_|' => 0,
@@ -20,6 +20,14 @@ class Digit
 	end
 
 	def convert_to_integer
+		@valid = false
+		if VALID_STRING_REPRESENTATIONS[@string] then
+			@valid = true
+		end
 		VALID_STRING_REPRESENTATIONS[@string]
+	end
+
+	def valid?
+		@valid
 	end
 end
