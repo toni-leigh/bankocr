@@ -9,7 +9,7 @@ describe Digit do
 
 	let(:salvagable_digit) { Digit.new('|_ | ||_|') }  
 
-	let(:invalid_digit) { Digit.new('|||||||_|') }
+	let(:illegible_digit) { Digit.new('|||||||_|') }
 
 	it "should have an integer value" do
 
@@ -48,7 +48,7 @@ describe Digit do
 
 		expect( valid_digit ).to be_valid
 
-		expect( invalid_digit ).not_to be_valid
+		expect( illegible_digit ).not_to be_valid
 
 	end
 
@@ -58,7 +58,7 @@ describe Digit do
 
 		expect( valid_digit.to_s ).to be == '0'
 
-		expect( invalid_digit.to_s ).to be =='?'
+		expect( illegible_digit.to_s ).to be =='?'
 
 	end
 
@@ -76,7 +76,7 @@ describe Digit do
 
 		expect( salvagable_digit ).to be_salvagable
 
-		expect( invalid_digit ).not_to be_salvagable
+		expect( illegible_digit ).not_to be_salvagable
 
 	end
 
@@ -84,7 +84,7 @@ describe Digit do
 
 		expect( salvagable_digit.salvage ).to be kind_of(Integer)
 
-		expect( invalid_digit.salvage ).to be == nil
+		expect( illegible_digit.salvage ).to be == nil
 
 	end
 
