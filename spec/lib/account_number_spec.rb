@@ -113,7 +113,7 @@ describe AccountNumber do
 
 	end
 
-	xit "should check it's ambiguity" do
+	it "should check it's ambiguity" do
 
 		expect( valid_account_number ).not_to be_ambiguous
 
@@ -123,11 +123,11 @@ describe AccountNumber do
 
 	end
 
-	xit "should have AMB in to_s return if it is ambiguous" do
+	it "should have AMB in to_s return if it is ambiguous" do
 
 		expect( valid_account_number.to_s ).not_to include("AMB")
 
-		expect( illegible_account_number.to_s ).to include("AMB")
+		expect( ambiguous_invalid_number.to_s ).to include("AMB")
 
 	end
 	

@@ -1,6 +1,6 @@
 class AccountNumber
 
-	attr_accessor :account_number_string, :alternate_numbers, :digits, :salvagable, :valid
+	attr_accessor :account_number_string, :alternate_numbers, :ambiguous, :digits, :salvagable, :valid
 
 	def initialize(account_number_string = '')
 
@@ -11,6 +11,8 @@ class AccountNumber
 		@alternate = false
 
 		@account_number_string = account_number_string
+
+		@ambiguous = false
 
 		if (account_number_string.length > 0)
 
@@ -86,6 +88,25 @@ class AccountNumber
 
 		end
 
+		set_ambiguous
+
+		apply_alternate
+
+	end
+
+	def apply_alternate
+		if (@alternate_numbers.length == 1)
+			@digits = @alternate_numbers[0].digits
+			@valid = true
+		end
+	end
+
+	def set_ambiguous
+
+		if (@alternate_numbers.length > 1)
+			@ambiguous = true
+		end
+
 	end
 
 	def validate
@@ -113,6 +134,10 @@ class AccountNumber
 
 	end
 
+	def ambiguous?
+		@ambiguous
+	end
+
 	def valid?
 		@valid 
 	end
@@ -135,10 +160,14 @@ class AccountNumber
 
 		end
 
-		if @legible
-			output_string += ' ERR' unless @valid
+		if @ambiguous
+			output_string += ' AMB'
 		else
-			output_string += ' ILL'
+			if @legible
+				output_string += ' ERR' unless @valid
+			else
+				output_string += ' ILL'
+			end
 		end
 
 		output_string
