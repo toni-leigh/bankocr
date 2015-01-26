@@ -1,6 +1,6 @@
 class AccountNumber
 
-	attr_accessor :account_number_string, :alternate_numbers, :ambiguous, :digits, :salvagable, :valid
+	attr_accessor :account_number_string, :alternate_numbers, :ambiguous, :digits, :valid
 
 	def initialize(account_number_string = '')
 		@digits = Array.new(9)
@@ -25,10 +25,6 @@ class AccountNumber
 
 	def legible?
 		@legible 
-	end
-
-	def salvagable?
-		@salvagable 
 	end
 
 	def get_digit_string(position)
@@ -103,19 +99,15 @@ class AccountNumber
 	def validate
 		checksum = 0;
 		@legible = true
-		count_illegible = 0
-		@salvagable = true
 
 		(0..8).each do |i|
 			if @digits[8-i].number == nil
-				count_illegible += 1
 				@legible = false
 			else
  				checksum += (@digits[8-i].number*(i+1))
  			end
 		end
 
-		@salvagable = false unless count_illegible < 2
 		@valid = ( checksum % 11 == 0 )
 	end
 

@@ -83,7 +83,7 @@ describe AccountNumber do
 
 	end
 
-	it "should know if it is salvagable, i.e. if it has one and one only illegible digit" do
+	it "should know if it is salvagable, i.e. if it has one and one only illegible digit and that digit only has one illegible character" do
 
 		expect( valid_account_number ).to be_salvagable
 
@@ -109,7 +109,9 @@ describe AccountNumber do
 
 	end
 
-	xit "should have exactly one alternative if it is an ILL that is actually salvagable" do
+	it "should have exactly one alternative if it is an ILL that is actually salvagable" do
+
+
 
 	end
 
