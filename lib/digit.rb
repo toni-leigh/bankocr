@@ -1,5 +1,5 @@
 class Digit
-	attr_accessor :number, :string, :string_representations, :valid
+	attr_accessor :number, :salvage, :salvagable, :string, :string_representations, :valid
 
 	VALID_STRING_REPRESENTATIONS = {
 		' _ | ||_|' => 0,
@@ -26,8 +26,10 @@ class Digit
 	}
 
 	def initialize(string = '')
+		@salvagable = false
 		@string = string
 		@number = convert_to_integer
+		check_for_errors
 	end
 
 	def convert_to_integer
@@ -40,6 +42,44 @@ class Digit
 
 	def get_alternates(target = nil)
 		AMBIGUOUS_DIGITS[target]
+	end
+
+	def check_for_errors		
+		errors = {}
+
+		VALID_STRING_REPRESENTATIONS.each do |valid_digit_string,valid_digit_index|
+			errors[valid_digit_index] = count_comparison_errors(valid_digit_string)
+		end
+
+		# no single char error can result in two possible digits so we either find
+		# one match with a single error or no matches
+		errors.each do |valid_digit_string,error_count|
+			if error_count === 1
+				set_salvagable(valid_digit_string)
+			end
+		end
+	end
+
+	def count_comparison_errors(valid_to_compare_to)
+		errors = 0
+
+		valid_to_compare_to.split('').each_with_index do |char,index|
+			if char == @string.split('')[index]
+			else
+				errors += 1
+			end
+		end
+
+		errors
+	end
+
+	def set_salvagable(salvage_to_digit)
+		@salvage = salvage_to_digit
+		@salvagable = true
+	end
+
+	def salvagable?
+		@salvagable
 	end
 
 	def valid?
