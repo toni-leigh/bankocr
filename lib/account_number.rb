@@ -4,27 +4,29 @@ class AccountNumber
 
 	def initialize(account_number_string = '')
 
-		@account_number_string = account_number_string
-
-		@humanised_output = ''
-
 		@digits = Array.new(9)
 
-		@alternate_numbers = []
+		@alternate_numbers = []		
 
-		convert_account_number
+		@account_number_string = account_number_string
 
-		validate
+		if (account_number_string.length > 0)
+
+			set_from_string
+
+		end
 
 	end
 
-	def convert_account_number
+	def set_from_string()
 
 		@digits.each_with_index do |digit,index|
 
 			@digits[index] = Digit.new(retrieve_digit_string(index))
 
 		end
+
+		validate
 
 	end
 
