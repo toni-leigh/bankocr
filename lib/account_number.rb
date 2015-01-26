@@ -8,6 +8,8 @@ class AccountNumber
 
 		@alternate_numbers = []		
 
+		@alternate = false
+
 		@account_number_string = account_number_string
 
 		if (account_number_string.length > 0)
@@ -20,9 +22,9 @@ class AccountNumber
 
 	def set_from_integers(integer_array)
 
-		integer_array.each do |integer,index|
+		integer_array.each_with_index do |integer,index|
 
-			@digits[index] = new Digit;
+			@digits[index] = Digit.new;
 
 			@digits[index].set_from_integer(integer)
 
@@ -34,15 +36,15 @@ class AccountNumber
 
 		@digits.each_with_index do |digit,index|
 
-			@digits[index] = Digit.new()
-
-			@digits[index].set_from_string(retrieve_digit_string(index))
+			@digits[index] = Digit.new(retrieve_digit_string(index))
 
 		end
 
 		validate
 
-		set_alternates unless @valid
+		if (legible? && !valid?)
+			set_alternates
+		end
 
 	end
 
@@ -58,7 +60,31 @@ class AccountNumber
 
 	def set_alternates 
 
+		@digits.each_with_index do |digit,index|
 
+			digit.get_alternates.to_a.each do |alternate_digit|
+
+				integer_array = []
+
+				@digits.each do |digit|
+					integer_array << digit.number
+				end
+
+				integer_array[index] = alternate_digit
+
+				alternate_account_number = AccountNumber.new
+
+				alternate_account_number.set_from_integers(integer_array)
+
+				if (alternate_account_number.validate)
+
+					@alternate_numbers << alternate_account_number
+
+				end
+
+			end
+
+		end
 
 	end
 
