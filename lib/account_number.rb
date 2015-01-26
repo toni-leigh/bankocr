@@ -18,15 +18,31 @@ class AccountNumber
 
 	end
 
-	def set_from_string()
+	def set_from_integers(integer_array)
+
+		integer_array.each do |integer,index|
+
+			@digits[index] = new Digit;
+
+			@digits[index].set_from_integer(integer)
+
+		end
+
+	end
+
+	def set_from_string
 
 		@digits.each_with_index do |digit,index|
 
-			@digits[index] = Digit.new(retrieve_digit_string(index))
+			@digits[index] = Digit.new()
+
+			@digits[index].set_from_string(retrieve_digit_string(index))
 
 		end
 
 		validate
+
+		set_alternates unless @valid
 
 	end
 
@@ -37,6 +53,12 @@ class AccountNumber
 			@account_number_string[position * 3 + 27,3],
 			@account_number_string[position * 3 + 54,3]
 		].join('')
+
+	end
+
+	def set_alternates 
+
+
 
 	end
 

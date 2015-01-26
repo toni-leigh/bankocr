@@ -27,9 +27,15 @@ class Digit
 
 	def initialize(string = '')
 		@salvagable = false
+		if (string.length > 0)
+			set_from_string(string)
+		end
+	end
+
+	def set_from_string(string)
 		@string = string
 		convert_to_integer
-		check_for_errors
+		check_for_errors		
 	end
 
 	def convert_to_integer
