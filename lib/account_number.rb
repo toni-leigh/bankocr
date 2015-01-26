@@ -22,15 +22,29 @@ class AccountNumber
 
 	end
 
-	def set_from_integers(integer_array)
+	def ambiguous?
+		@ambiguous
+	end
 
-		integer_array.each_with_index do |integer,index|
+	def valid?
+		@valid 
+	end
 
-			@digits[index] = Digit.new;
+	def legible?
+		@legible 
+	end
 
-			@digits[index].set_from_integer(integer)
+	def salvagable?
+		@salvagable 
+	end
 
-		end
+	def retrieve_digit_string(position)
+
+		[ 
+			@account_number_string[position * 3,3],
+			@account_number_string[position * 3 + 27,3],
+			@account_number_string[position * 3 + 54,3]
+		].join('')
 
 	end
 
@@ -50,13 +64,15 @@ class AccountNumber
 
 	end
 
-	def retrieve_digit_string(position)
+	def set_from_integers(integer_array)
 
-		[ 
-			@account_number_string[position * 3,3],
-			@account_number_string[position * 3 + 27,3],
-			@account_number_string[position * 3 + 54,3]
-		].join('')
+		integer_array.each_with_index do |integer,index|
+
+			@digits[index] = Digit.new;
+
+			@digits[index].set_from_integer(integer)
+
+		end
 
 	end
 
@@ -94,19 +110,19 @@ class AccountNumber
 
 	end
 
-	def apply_alternate
-		if (@alternate_numbers.length == 1)
-			@digits = @alternate_numbers[0].digits
-			@valid = true
-		end
-	end
-
 	def set_ambiguous
 
 		if (@alternate_numbers.length > 1)
 			@ambiguous = true
 		end
 
+	end
+
+	def apply_alternate
+		if (@alternate_numbers.length == 1)
+			@digits = @alternate_numbers[0].digits
+			@valid = true
+		end
 	end
 
 	def validate
@@ -132,22 +148,6 @@ class AccountNumber
 
 		@valid = ( checksum % 11 == 0 )
 
-	end
-
-	def ambiguous?
-		@ambiguous
-	end
-
-	def valid?
-		@valid 
-	end
-
-	def legible?
-		@legible 
-	end
-
-	def salvagable?
-		@salvagable 
 	end
 
 	def to_s 
