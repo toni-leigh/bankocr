@@ -3,21 +3,14 @@ class AccountNumber
 	attr_accessor :account_number_string, :alternate_numbers, :ambiguous, :digits, :salvagable, :valid
 
 	def initialize(account_number_string = '')
-
 		@digits = Array.new(9)
-
 		@alternate_numbers = []		
-
 		@alternate = false
-
 		@account_number_string = account_number_string
-
 		@ambiguous = false
 
 		if (account_number_string.length > 0)
-
 			set_from_string
-
 		end
 
 	end
@@ -39,21 +32,16 @@ class AccountNumber
 	end
 
 	def retrieve_digit_string(position)
-
 		[ 
 			@account_number_string[position * 3,3],
 			@account_number_string[position * 3 + 27,3],
 			@account_number_string[position * 3 + 54,3]
 		].join('')
-
 	end
 
 	def set_from_string
-
 		@digits.each_with_index do |digit,index|
-
 			@digits[index] = Digit.new(retrieve_digit_string(index))
-
 		end
 
 		validate
@@ -61,27 +49,18 @@ class AccountNumber
 		if (legible? && !valid?)
 			set_alternates
 		end
-
 	end
 
 	def set_from_integers(integer_array)
-
 		integer_array.each_with_index do |integer,index|
-
 			@digits[index] = Digit.new;
-
 			@digits[index].set_from_integer(integer)
-
 		end
-
 	end
 
 	def set_alternates 
-
 		@digits.each_with_index do |digit,index|
-
 			digit.get_alternates.to_a.each do |alternate_digit|
-
 				integer_array = []
 
 				@digits.each do |digit|
@@ -91,31 +70,22 @@ class AccountNumber
 				integer_array[index] = alternate_digit
 
 				alternate_account_number = AccountNumber.new
-
 				alternate_account_number.set_from_integers(integer_array)
 
 				if (alternate_account_number.validate)
-
 					@alternate_numbers << alternate_account_number
-
 				end
-
 			end
-
 		end
 
 		set_ambiguous
-
 		apply_alternate
-
 	end
 
 	def set_ambiguous
-
 		if (@alternate_numbers.length > 1)
 			@ambiguous = true
 		end
-
 	end
 
 	def apply_alternate
@@ -126,13 +96,9 @@ class AccountNumber
 	end
 
 	def validate
-
 		checksum = 0;
-
 		@legible = true
-
 		count_illegible = 0
-
 		@salvagable = true
 
 		(0..8).each do |i|
@@ -145,19 +111,14 @@ class AccountNumber
 		end
 
 		@salvagable = false unless count_illegible < 2
-
 		@valid = ( checksum % 11 == 0 )
-
 	end
 
 	def to_s 
-
 		output_string = ''
 
 		@digits.each do |digit|
-
 			output_string += "#{digit.to_s}"
-
 		end
 
 		if @ambiguous
@@ -171,7 +132,5 @@ class AccountNumber
 		end
 
 		output_string
-
 	end
-
 end
