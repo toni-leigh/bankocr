@@ -22,12 +22,10 @@ class Digit
 	end
 
 	def set_from_integer(integer)
-
 		@number = integer
 		@string = DIGIT_DATA[@number]
 		@valid = true
 		self
-
 	end
 
 	def set_from_string(string)
