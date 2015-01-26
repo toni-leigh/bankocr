@@ -32,6 +32,14 @@ class Digit
 		end
 	end
 
+	def set_from_integer(integer)
+
+		@number = integer
+		@string = VALID_STRING_REPRESENTATIONS[@number]
+		@valid = true
+
+	end
+
 	def set_from_string(string)
 		@string = string
 		convert_to_integer
