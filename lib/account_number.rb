@@ -39,6 +39,18 @@ class AccountNumber
 		].join('')
 	end
 
+	def get_alternate_integer_array(new_digit,target_index)
+		integer_array = []
+
+		@digits.each do |digit|
+			integer_array << digit.number
+		end
+
+		integer_array[target_index] = new_digit
+
+		integer_array
+	end
+
 	def set_from_string
 		@digits.each_with_index do |digit,index|
 			@digits[index] = Digit.new(retrieve_digit_string(index))
@@ -61,16 +73,9 @@ class AccountNumber
 	def set_alternates 
 		@digits.each_with_index do |digit,index|
 			digit.get_alternates.to_a.each do |alternate_digit|
-				integer_array = []
-
-				@digits.each do |digit|
-					integer_array << digit.number
-				end
-
-				integer_array[index] = alternate_digit
-
+				alternate_integer_array = get_alternate_integer_array(alternate_digit,index)
 				alternate_account_number = AccountNumber.new
-				alternate_account_number.set_from_integers(integer_array)
+				alternate_account_number.set_from_integers(alternate_integer_array)
 
 				if (alternate_account_number.validate)
 					@alternate_numbers << alternate_account_number
