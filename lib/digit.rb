@@ -58,9 +58,9 @@ class Digit
 
 			# no single char error can result in two possible digits so we either find
 			# one match with a single error or no matches
-			errors.each do |valid_digit_string,error_count|
+			errors.each do |valid_integer,error_count|
 				if error_count === 1
-					set_salvagable(valid_digit_string)
+					set_salvagable(valid_integer)
 				end
 			end
 		end

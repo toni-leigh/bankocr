@@ -63,6 +63,12 @@ class AccountNumber
 
 		if (legible? && !valid?)
 			set_alternates
+			apply_alternate
+		end
+
+		if (salvagable?)
+			salvage_number
+			apply_alternate
 		end
 	end
 
@@ -87,7 +93,6 @@ class AccountNumber
 		end
 
 		set_ambiguous
-		apply_alternate
 	end
 
 	def set_ambiguous
@@ -114,10 +119,28 @@ class AccountNumber
 		end
 	end
 
+	def salvage_number
+		alternate_integer_array = []
+		@digits.each_with_index do |digit,index|
+			if (digit.valid?)
+				alternate_integer_array[index] = digit.number
+			else
+				alternate_integer_array[index] = digit.salvage_to
+			end
+		end
+		alternate_account_number = AccountNumber.new
+		alternate_account_number.set_from_integers(alternate_integer_array)
+
+		if (alternate_account_number.validate)
+			@alternate_numbers << alternate_account_number
+		end
+	end
+
 	def apply_alternate
 		if (@alternate_numbers.length == 1)
 			@digits = @alternate_numbers[0].digits
 			@valid = true
+			@legible = true
 		end
 	end
 
