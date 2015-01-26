@@ -48,18 +48,20 @@ class Digit
 		DIGIT_DATA[@number]['ambiguities']
 	end
 
-	def check_for_errors		
-		errors = {}
+	def check_for_errors	
+		if (!valid?)
+			errors = {}
 
-		DIGIT_DATA.each do |valid_digit_index,valid_digit_data|
-			errors[valid_digit_index] = count_comparison_errors(valid_digit_data['string'])
-		end
+			DIGIT_DATA.each do |valid_digit_index,valid_digit_data|
+				errors[valid_digit_index] = count_comparison_errors(valid_digit_data['string'])
+			end
 
-		# no single char error can result in two possible digits so we either find
-		# one match with a single error or no matches
-		errors.each do |valid_digit_string,error_count|
-			if error_count === 1
-				set_salvagable(valid_digit_string)
+			# no single char error can result in two possible digits so we either find
+			# one match with a single error or no matches
+			errors.each do |valid_digit_string,error_count|
+				if error_count === 1
+					set_salvagable(valid_digit_string)
+				end
 			end
 		end
 	end

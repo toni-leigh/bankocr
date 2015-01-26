@@ -1,6 +1,6 @@
 class AccountNumber
 
-	attr_accessor :account_number_string, :alternate_numbers, :ambiguous, :digits, :valid
+	attr_accessor :account_number_string, :alternate_numbers, :salvagable, :ambiguous, :digits, :valid
 
 	def initialize(account_number_string = '')
 		@digits = Array.new(9)
@@ -8,6 +8,7 @@ class AccountNumber
 		@alternate = false
 		@account_number_string = account_number_string
 		@ambiguous = false
+		@salvagable = false
 
 		if (account_number_string.length > 0)
 			set_from_string
@@ -21,6 +22,10 @@ class AccountNumber
 
 	def valid?
 		@valid 
+	end
+
+	def salvagable?
+		@salvagable 
 	end
 
 	def legible?
@@ -54,6 +59,8 @@ class AccountNumber
 
 		validate
 
+		set_salvagable unless legible?
+
 		if (legible? && !valid?)
 			set_alternates
 		end
@@ -86,6 +93,24 @@ class AccountNumber
 	def set_ambiguous
 		if (@alternate_numbers.length > 1)
 			@ambiguous = true
+		end
+	end
+
+	def set_salvagable
+		count_salvagables = 0
+		count_valids = 0
+		@digits.each do |digit|
+			if (digit.salvagable?)
+				count_salvagables += 1
+			end
+			if (digit.valid?)
+				count_valids += 1
+			end
+		end
+		# counting one salvagable isn't enough, need eight valids for it to be a truly salvagable
+		# acc number
+		if count_salvagables == 1 && count_valids == 8
+			@salvagable = true
 		end
 	end
 
