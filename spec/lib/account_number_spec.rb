@@ -85,7 +85,7 @@ describe AccountNumber do
 
 	it "should know if it is salvagable, i.e. if it has one and one only illegible digit and that digit only has one illegible character" do
 
-		expect( valid_account_number ).to be_salvagable
+		expect( valid_account_number ).not_to be_salvagable
 
 		expect( salvagable_account_number ).to be_salvagable
 
