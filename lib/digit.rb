@@ -2,16 +2,16 @@ class Digit
 	attr_accessor :number, :salvage, :salvagable, :string, :string_representations, :valid
 
 	VALID_STRING_REPRESENTATIONS = {
-		' _ | ||_|' => 0,
-		'     |  |' => 1,
-		' _  _||_ ' => 2,
-		' _  _| _|' => 3,
-		'   |_|  |' => 4,
-		' _ |_  _|' => 5,
-		' _ |_ |_|' => 6,
-		' _   |  |' => 7,
-		' _ |_||_|' => 8,
-		' _ |_| _|' => 9
+		0 => ' _ | ||_|',
+		1 => '     |  |',
+		2 => ' _  _||_ ',
+		3 => ' _  _| _|',
+		4 => '   |_|  |',
+		5 => ' _ |_  _|',
+		6 => ' _ |_ |_|',
+		7 => ' _   |  |',
+		8 => ' _ |_||_|',
+		9 => ' _ |_| _|'
 	}
 
 	AMBIGUOUS_DIGITS = {
@@ -28,16 +28,18 @@ class Digit
 	def initialize(string = '')
 		@salvagable = false
 		@string = string
-		@number = convert_to_integer
+		convert_to_integer
 		check_for_errors
 	end
 
 	def convert_to_integer
 		@valid = false
-		if VALID_STRING_REPRESENTATIONS[@string] then
-			@valid = true
+		VALID_STRING_REPRESENTATIONS.each do |integer,string_representation|
+			if (@string == string_representation)
+				@number = integer
+				@valid = true
+			end
 		end
-		VALID_STRING_REPRESENTATIONS[@string]
 	end
 
 	def get_alternates(target = nil)
@@ -47,7 +49,7 @@ class Digit
 	def check_for_errors		
 		errors = {}
 
-		VALID_STRING_REPRESENTATIONS.each do |valid_digit_string,valid_digit_index|
+		VALID_STRING_REPRESENTATIONS.each do |valid_digit_index,valid_digit_string|
 			errors[valid_digit_index] = count_comparison_errors(valid_digit_string)
 		end
 
