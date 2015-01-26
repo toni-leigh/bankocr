@@ -84,7 +84,9 @@ describe Digit do
 
 	it "should return a valid number if it is salvagable" do
 
-		expect( salvagable_digit.salvage ).to be kind_of(Integer)
+		expect( salvagable_digit.salvage ).to be_kind_of(Integer)
+
+		expect( salvagable_digit.salvage ).to be == 0
 
 		expect( illegible_digit.salvage ).to be == nil
 
