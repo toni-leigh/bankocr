@@ -17,7 +17,9 @@ class Digit
 	AMBIGUOUS_DIGITS = {
 		0 => [8],
 		1 => [7],
+		2 => [],
 		3 => [9],
+		4 => [],
 		5 => [6,9],
 		6 => [5,8],
 		7 => [1],
@@ -37,6 +39,7 @@ class Digit
 		@number = integer
 		@string = VALID_STRING_REPRESENTATIONS[@number]
 		@valid = true
+		self
 
 	end
 
@@ -56,8 +59,8 @@ class Digit
 		end
 	end
 
-	def get_alternates(target = nil)
-		AMBIGUOUS_DIGITS[target]
+	def get_alternates
+		AMBIGUOUS_DIGITS[@number]
 	end
 
 	def check_for_errors		
