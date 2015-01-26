@@ -89,8 +89,6 @@ describe AccountNumber do
 
 		expect( salvagable_account_number ).to be_salvagable
 
-		expect( salvagable_account_number ).not_to be_legible
-
 		expect( illegible_account_number ).not_to be_salvagable
 
 	end
