@@ -37,8 +37,8 @@ describe Digit do
 
 	it "should convert any strings for any digit into integers" do
 
-		Digit::VALID_STRING_REPRESENTATIONS.each do |integer,string_representation|
-			digit = Digit.new(string_representation)
+		Digit::DIGIT_DATA.each do |integer,data|
+			digit = Digit.new(data['string'])
 			expect( digit.number ).to be == integer
 		end
 
