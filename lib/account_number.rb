@@ -31,7 +31,7 @@ class AccountNumber
 		@salvagable 
 	end
 
-	def retrieve_digit_string(position)
+	def get_digit_string(position)
 		[ 
 			@account_number_string[position * 3,3],
 			@account_number_string[position * 3 + 27,3],
@@ -53,7 +53,7 @@ class AccountNumber
 
 	def set_from_string
 		@digits.each_with_index do |digit,index|
-			@digits[index] = Digit.new(retrieve_digit_string(index))
+			@digits[index] = Digit.new(get_digit_string(index))
 		end
 
 		validate
