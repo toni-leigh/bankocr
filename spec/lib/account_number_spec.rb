@@ -101,7 +101,11 @@ describe AccountNumber do
 
 	end
 
-	xit "should have an alternative array of more than one number if it's an ambiguous error" do
+	it "should have an alternative array of more than one number if it's an ambiguous error" do
+
+		ambiguous_invalid_number.set_alternates
+
+		expect( ambiguous_invalid_number.alternate_numbers.length ).to be > 1
 
 	end
 
@@ -111,9 +115,11 @@ describe AccountNumber do
 
 	xit "should check it's ambiguity" do
 
-		expect( valid_account_number ).to be_ambiguous
+		expect( valid_account_number ).not_to be_ambiguous
 
 		expect( illegible_account_number ).not_to be_ambiguous
+
+		expect( ambiguous_invalid_number ).to be_ambiguous
 
 	end
 
