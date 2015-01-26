@@ -131,6 +131,16 @@ class AccountNumber
 			end
 		end
 
+		alternates = []
+		if (@alternate_numbers.length > 1)
+			output_string += ' ['
+			@alternate_numbers.each do |alternate|
+				alternates << alternate.to_s
+			end
+			output_string += alternates.join(', ')
+			output_string += ']'
+		end
+
 		output_string
 	end
 end
