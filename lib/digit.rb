@@ -70,10 +70,7 @@ class Digit
 		errors = 0
 
 		valid_to_compare_to.split('').each_with_index do |char,index|
-			if char == @string.split('')[index]
-			else
-				errors += 1
-			end
+			errors += 1 unless char == @string.split('')[index]
 		end
 
 		errors
