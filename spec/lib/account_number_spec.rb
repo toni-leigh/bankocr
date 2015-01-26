@@ -9,7 +9,7 @@ describe AccountNumber do
 
 	let(:invalid_account_number) { AccountNumber.new(' _  _  _  _  _  _  _  _  _   || || || || || || || ||_|  ||_||_||_||_||_||_||_||_|                           ') }
 
-	let(:salvagable_account_number) { AccountNumber.new('    _  _  _  _  _  _     _ |_||_|| || ||_ | |  |  ||_   | _||_||_||_|  |  |  | _|                           ') }
+	let(:salvagable_account_number) { AccountNumber.new('|_  _  _  _  _  _  _  _    | || || || || || || ||_   ||_||_||_||_||_||_||_| _|  |                           ') }
 
 	let(:illegible_account_number) { AccountNumber.new('||||_  _  _  _  _  _  _  _   || || || || || || || || |  ||_||_||_||_||_||_||_||_|                           ') }
 
@@ -111,7 +111,7 @@ describe AccountNumber do
 
 	it "should have exactly one alternative if it is an ILL that is actually salvagable" do
 
-
+		expect( salvagable_account_number.alternate_numbers.length ).to be == 1 
 
 	end
 
