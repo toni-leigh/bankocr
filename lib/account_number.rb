@@ -41,7 +41,7 @@ class AccountNumber
 		@checksum_valid 
 	end
 
-	def checksum_validate
+	def set_checksum_valid
 		checksum = 0;
 
 		(0..(@account_number_length - 1)).each do |i|
@@ -129,7 +129,7 @@ class AccountNumber
 			@digits[index] = Digit.new(get_digit_string(index))
 		end
 
-		checksum_validate
+		set_checksum_valid
 		set_legible
 
 		set_salvagable unless legible?
@@ -152,7 +152,7 @@ class AccountNumber
 			@digits[index] = Digit.new;
 			@digits[index].set_from_integer(integer)
 		end
-		checksum_validate
+		set_checksum_valid
 		set_legible
 	end
 
