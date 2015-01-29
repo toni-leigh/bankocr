@@ -16,22 +16,38 @@ class AccountNumber
 
 	end
 
+	# is the account number invlid but have more than one valid alternative
+	# set looks at the count of alternate numbers
 	def ambiguous?
 		@ambiguous
 	end
 
+	# does the account number pass the checksum validation
+	# set performs checksum
 	def valid?
 		@valid 
 	end
 
+	# is the account number salvagable? i.e. does it have error digit with 
+	# just one error in the digit itself
+	# set checks Digit.salvagbale status and also makes sure just one Digit
+	# is invalid
 	def salvagable?
 		@salvagable 
 	end
 
+	# is the account number legible, are all digits readable? An account 
+	# number can be illegible and salvagable, or illegible and not salvagable
 	def legible?
 		@legible 
 	end
 
+	# looks at the account number string and extracts the 3x3 charset that
+	# respresents the digit
+	#
+	# position - Integer that represents the position, 0 - 8 to target
+	# 
+	# return - 9 char string that represents the digit
 	def get_digit_string(position)
 		[ 
 			@account_number_string[position * 3,3],
@@ -40,6 +56,8 @@ class AccountNumber
 		].join('')
 	end
 
+	# builds an alternate integer array - used for ambiguous account numbers
+	# 
 	def get_alternate_integer_array(new_digit,target_index)
 		integer_array = []
 
@@ -52,6 +70,7 @@ class AccountNumber
 		integer_array
 	end
 
+	# sets up the Digit array based on the string input and validates
 	def set_from_string
 		@digits.each_with_index do |digit,index|
 			@digits[index] = Digit.new(get_digit_string(index))
@@ -72,15 +91,18 @@ class AccountNumber
 		end
 	end
 
+	# sets up the Digit array based on an array of Integers, which skips
+	# the validations for legibility and salvagability
 	def set_from_integers(integer_array)
 		integer_array.each_with_index do |integer,index|
 			@digits[index] = Digit.new;
 			@digits[index].set_from_integer(integer)
 		end
-
 		validate
 	end
 
+	# looks through the account number and builds alternate numbers, using ambiguous
+	# digits, adding them to the alternate numbers arrays
 	def set_alternates 
 		@digits.each_with_index do |digit,index|
 			digit.get_alternates.to_a.each do |alternate_digit|
@@ -116,6 +138,7 @@ class AccountNumber
 		end
 	end
 
+	# builds an integer array from a salvagble number storing it as an alternate
 	def salvage_number
 		alternate_integer_array = []
 		@digits.each_with_index do |digit,index|
@@ -128,6 +151,8 @@ class AccountNumber
 		add_new_alternate(alternate_integer_array)
 	end
 
+	# creates a new AccountNumber object and adds that to the alternate numbers 
+	# array if it is valid
 	def add_new_alternate(alternate_integer_array)
 		alternate_account_number = AccountNumber.new
 		alternate_account_number.set_from_integers(alternate_integer_array)
@@ -137,6 +162,8 @@ class AccountNumber
 		end
 	end
 
+	# if there is one alternate then apply it else do nothing
+	# also an applied alternate is valid and legible
 	def apply_alternate
 		if (@alternate_numbers.length == 1)
 			@digits = @alternate_numbers[0].digits
