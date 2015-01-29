@@ -1,6 +1,6 @@
 class AccountNumber
 
-	attr_accessor :account_number_string, :alternate_numbers, :salvagable, :ambiguous, :digits, :valid
+	attr_accessor :account_number_length, :account_number_string, :alternate_numbers, :salvagable, :ambiguous, :digits, :valid
 
 	def initialize(account_number_string = '', account_number_length = 9)
 		@account_number_length = account_number_length
