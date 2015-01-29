@@ -77,6 +77,8 @@ class AccountNumber
 			@digits[index] = Digit.new;
 			@digits[index].set_from_integer(integer)
 		end
+
+		validate
 	end
 
 	def set_alternates 
@@ -130,7 +132,7 @@ class AccountNumber
 		alternate_account_number = AccountNumber.new
 		alternate_account_number.set_from_integers(alternate_integer_array)
 
-		if (alternate_account_number.validate)
+		if (alternate_account_number.valid?)
 			@alternate_numbers << alternate_account_number
 		end
 	end
