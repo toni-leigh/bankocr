@@ -22,10 +22,28 @@ class AccountNumber
 		@ambiguous
 	end
 
+	def set_ambiguous
+		if (@alternate_numbers.length > 1)
+			@ambiguous = true
+		end
+	end
+
 	# does the account number pass the checksum validation
 	# set performs checksum
 	def valid?
 		@valid 
+	end
+
+	def validate
+		checksum = 0;
+
+		(0..8).each do |i|
+			if @digits[8-i].number != nil
+ 				checksum += (@digits[8-i].number*(i+1))
+ 			end
+		end
+
+		@valid = ( checksum % 11 == 0 )
 	end
 
 	# is the account number salvagable? i.e. does it have error digit with 
@@ -36,10 +54,38 @@ class AccountNumber
 		@salvagable 
 	end
 
+	def set_salvagable
+		count_salvagables = 0
+		count_valids = 0
+		@digits.each do |digit|
+			if (digit.salvagable?)
+				count_salvagables += 1
+			end
+			if (digit.valid?)
+				count_valids += 1
+			end
+		end
+		# counting one salvagable isn't enough, need eight valids for it to be a truly salvagable
+		# acc number
+		if count_salvagables == 1 && count_valids == 8
+			@salvagable = true
+		end
+	end
+
 	# is the account number legible, are all digits readable? An account 
 	# number can be illegible and salvagable, or illegible and not salvagable
 	def legible?
 		@legible 
+	end
+
+	def set_legible
+		@legible = true
+
+		(0..8).each do |i|
+			if @digits[8-i].number == nil
+				@legible = false
+ 			end
+		end
 	end
 
 	# looks at the account number string and extracts the 3x3 charset that
@@ -77,6 +123,7 @@ class AccountNumber
 		end
 
 		validate
+		set_legible
 
 		set_salvagable unless legible?
 
@@ -99,6 +146,7 @@ class AccountNumber
 			@digits[index].set_from_integer(integer)
 		end
 		validate
+		set_legible
 	end
 
 	# looks through the account number and builds alternate numbers, using ambiguous
@@ -112,30 +160,6 @@ class AccountNumber
 		end
 
 		set_ambiguous
-	end
-
-	def set_ambiguous
-		if (@alternate_numbers.length > 1)
-			@ambiguous = true
-		end
-	end
-
-	def set_salvagable
-		count_salvagables = 0
-		count_valids = 0
-		@digits.each do |digit|
-			if (digit.salvagable?)
-				count_salvagables += 1
-			end
-			if (digit.valid?)
-				count_valids += 1
-			end
-		end
-		# counting one salvagable isn't enough, need eight valids for it to be a truly salvagable
-		# acc number
-		if count_salvagables == 1 && count_valids == 8
-			@salvagable = true
-		end
 	end
 
 	# builds an integer array from a salvagble number storing it as an alternate
@@ -170,21 +194,6 @@ class AccountNumber
 			@valid = true
 			@legible = true
 		end
-	end
-
-	def validate
-		checksum = 0;
-		@legible = true
-
-		(0..8).each do |i|
-			if @digits[8-i].number == nil
-				@legible = false
-			else
- 				checksum += (@digits[8-i].number*(i+1))
- 			end
-		end
-
-		@valid = ( checksum % 11 == 0 )
 	end
 
 	def to_s 
