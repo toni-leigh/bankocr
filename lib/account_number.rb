@@ -2,8 +2,9 @@ class AccountNumber
 
 	attr_accessor :account_number_string, :alternate_numbers, :salvagable, :ambiguous, :digits, :valid
 
-	def initialize(account_number_string = '')
-		@digits = Array.new(9)
+	def initialize(account_number_string = '', account_number_length = 9)
+		@account_number_length = account_number_length
+		@digits = Array.new(@account_number_length)
 		@alternate_numbers = []		
 		@alternate = false
 		@account_number_string = account_number_string
@@ -37,9 +38,9 @@ class AccountNumber
 	def validate
 		checksum = 0;
 
-		(0..8).each do |i|
-			if @digits[8-i].number != nil
- 				checksum += (@digits[8-i].number*(i+1))
+		(0..(@account_number_length - 1)).each do |i|
+			if @digits[(@account_number_length - 1)-i].number != nil
+ 				checksum += (@digits[(@account_number_length - 1)-i].number*(i+1))
  			end
 		end
 
@@ -67,7 +68,7 @@ class AccountNumber
 		end
 		# counting one salvagable isn't enough, need eight valids for it to be a truly salvagable
 		# acc number
-		if count_salvagables == 1 && count_valids == 8
+		if count_salvagables == 1 && count_valids == (@account_number_length - 1)
 			@salvagable = true
 		end
 	end
@@ -81,8 +82,8 @@ class AccountNumber
 	def set_legible
 		@legible = true
 
-		(0..8).each do |i|
-			if @digits[8-i].number == nil
+		(0..(@account_number_length - 1)).each do |i|
+			if @digits[(@account_number_length - 1)-i].number == nil
 				@legible = false
  			end
 		end
@@ -91,14 +92,14 @@ class AccountNumber
 	# looks at the account number string and extracts the 3x3 charset that
 	# respresents the digit
 	#
-	# position - Integer that represents the position, 0 - 8 to target
+	# position - Integer that represents the position, 0 - (@account_number_length - 1) to target
 	# 
-	# return - 9 char string that represents the digit
+	# return - @account_number_length char string that represents the digit
 	def get_digit_string(position)
 		[ 
 			@account_number_string[position * 3,3],
-			@account_number_string[position * 3 + 27,3],
-			@account_number_string[position * 3 + 54,3]
+			@account_number_string[position * 3 + (@account_number_length * 3),3],
+			@account_number_string[position * 3 + (@account_number_length * 3 * 2),3]
 		].join('')
 	end
 
