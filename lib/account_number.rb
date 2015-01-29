@@ -6,7 +6,7 @@ class AccountNumber
 		:ambiguous, 
 		:digits, 
 		:salvagable, 
-		:valid
+		:checksum_valid
 
 	def initialize(account_number_string = '', account_number_length = 9)
 		@account_number_length = account_number_length
@@ -37,11 +37,11 @@ class AccountNumber
 
 	# does the account number pass the checksum validation
 	# set performs checksum
-	def valid?
-		@valid 
+	def checksum_valid?
+		@checksum_valid 
 	end
 
-	def validate
+	def checksum_validate
 		checksum = 0;
 
 		(0..(@account_number_length - 1)).each do |i|
@@ -50,7 +50,7 @@ class AccountNumber
  			end
 		end
 
-		@valid = ( checksum % 11 == 0 )
+		@checksum_valid = ( checksum % 11 == 0 )
 	end
 
 	# is the account number salvagable? i.e. does it have error digit with 
@@ -63,18 +63,18 @@ class AccountNumber
 
 	def set_salvagable
 		count_salvagables = 0
-		count_valids = 0
+		count_valid_digits = 0
 		@digits.each do |digit|
 			if (digit.salvagable?)
 				count_salvagables += 1
 			end
 			if (digit.valid?)
-				count_valids += 1
+				count_valid_digits += 1
 			end
 		end
 		# counting one salvagable isn't enough, need eight valids for it to be a truly salvagable
 		# acc number
-		if count_salvagables == 1 && count_valids == (@account_number_length - 1)
+		if count_salvagables == 1 && count_valid_digits == (@account_number_length - 1)
 			@salvagable = true
 		end
 	end
@@ -129,12 +129,12 @@ class AccountNumber
 			@digits[index] = Digit.new(get_digit_string(index))
 		end
 
-		validate
+		checksum_validate
 		set_legible
 
 		set_salvagable unless legible?
 
-		if (legible? && !valid?)
+		if (legible? && !checksum_valid?)
 			set_alternates
 			apply_alternate
 		end
@@ -152,7 +152,7 @@ class AccountNumber
 			@digits[index] = Digit.new;
 			@digits[index].set_from_integer(integer)
 		end
-		validate
+		checksum_validate
 		set_legible
 	end
 
@@ -188,7 +188,7 @@ class AccountNumber
 		alternate_account_number = AccountNumber.new
 		alternate_account_number.set_from_integers(alternate_integer_array)
 
-		if (alternate_account_number.valid?)
+		if (alternate_account_number.checksum_valid?)
 			@alternate_numbers << alternate_account_number
 		end
 	end
@@ -198,7 +198,7 @@ class AccountNumber
 	def apply_alternate
 		if (@alternate_numbers.length == 1)
 			@digits = @alternate_numbers[0].digits
-			@valid = true
+			@checksum_valid = true
 			@legible = true
 		end
 	end
@@ -214,7 +214,7 @@ class AccountNumber
 			' AMB'
 		else
 			if @legible 
-				if !@valid
+				if !@checksum_valid
 					' ERR'
 				else
 					''

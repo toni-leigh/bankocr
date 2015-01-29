@@ -5,7 +5,7 @@ describe AccountNumber do
 
 	let(:account_number) { AccountNumber.new(' _  _  _  _  _  _  _  _  _ | || || || || || || || || ||_||_||_||_||_||_||_||_||_|                           ') }
 
-	let(:valid_account_number) { AccountNumber.new(' _  _  _  _  _  _  _  _    | || || || || || || ||_   ||_||_||_||_||_||_||_| _|  |                           ') }
+	let(:checksum_valid_account_number) { AccountNumber.new(' _  _  _  _  _  _  _  _    | || || || || || || ||_   ||_||_||_||_||_||_||_| _|  |                           ') }
 
 	let(:invalid_account_number) { AccountNumber.new(' _  _  _  _  _  _  _  _  _   || || || || || || || ||_|  ||_||_||_||_||_||_||_||_|                           ') }
 
@@ -13,7 +13,7 @@ describe AccountNumber do
 
 	let(:illegible_account_number) { AccountNumber.new('||||_  _  _  _  _  _  _  _   || || || || || || || || |  ||_||_||_||_||_||_||_||_|                           ') }
 
-	let(:ambiguous_invalid_number) { AccountNumber.new(' _  _  _  _  _  _  _  _  _ |_ |_ |_ |_ |_ |_ |_ |_ |_  _| _| _| _| _| _| _| _| _|                           ') }
+	let(:ambiguous_checksum_invalid_number) { AccountNumber.new(' _  _  _  _  _  _  _  _  _ |_ |_ |_ |_ |_ |_ |_ |_ |_  _| _| _| _| _| _| _| _| _|                           ') }
 
 	it "should have a string that represents the full number of 108 chars" do
 
@@ -53,7 +53,7 @@ describe AccountNumber do
 
 	it "should checks its legibility by looking for invalid digits" do
 
-		expect( valid_account_number ).to be_legible
+		expect( checksum_valid_account_number ).to be_legible
 
 		expect( illegible_account_number ).not_to be_legible
 
@@ -61,7 +61,7 @@ describe AccountNumber do
 
 	it "should have ILL in to_s return if it is illegible" do
 
-		expect( valid_account_number.to_s ).not_to include("ILL")
+		expect( checksum_valid_account_number.to_s ).not_to include("ILL")
 
 		expect( illegible_account_number.to_s ).to include("ILL")
 
@@ -69,15 +69,15 @@ describe AccountNumber do
 
 	it "should validate itself by performing a checksum" do
 
-		expect( valid_account_number ).to be_valid
+		expect( checksum_valid_account_number ).to be_checksum_valid
 
-		expect( invalid_account_number ).not_to be_valid
+		expect( invalid_account_number ).not_to be_checksum_valid
 
 	end 
 
 	it "should have ERR in to_s return if it fails the checksum" do
 
-		expect( valid_account_number.to_s ).not_to include("ERR")
+		expect( checksum_valid_account_number.to_s ).not_to include("ERR")
 
 		expect( invalid_account_number.to_s ).to include("ERR")
 
@@ -85,7 +85,7 @@ describe AccountNumber do
 
 	it "should know if it is salvagable, i.e. if it has one and one only illegible digit and that digit only has one illegible character" do
 
-		expect( valid_account_number ).not_to be_salvagable
+		expect( checksum_valid_account_number ).not_to be_salvagable
 
 		expect( salvagable_account_number ).to be_salvagable
 
@@ -101,9 +101,9 @@ describe AccountNumber do
 
 	it "should have an alternative array of more than one number if it's an ambiguous error" do
 
-		ambiguous_invalid_number.set_alternates
+		ambiguous_checksum_invalid_number.set_alternates
 
-		expect( ambiguous_invalid_number.alternate_numbers.length ).to be > 1
+		expect( ambiguous_checksum_invalid_number.alternate_numbers.length ).to be > 1
 
 	end
 
@@ -115,19 +115,19 @@ describe AccountNumber do
 
 	it "should check it's ambiguity" do
 
-		expect( valid_account_number ).not_to be_ambiguous
+		expect( checksum_valid_account_number ).not_to be_ambiguous
 
 		expect( illegible_account_number ).not_to be_ambiguous
 
-		expect( ambiguous_invalid_number ).to be_ambiguous
+		expect( ambiguous_checksum_invalid_number ).to be_ambiguous
 
 	end
 
 	it "should have AMB in to_s return if it is ambiguous" do
 
-		expect( valid_account_number.to_s ).not_to include("AMB")
+		expect( checksum_valid_account_number.to_s ).not_to include("AMB")
 
-		expect( ambiguous_invalid_number.to_s ).to include("AMB")
+		expect( ambiguous_checksum_invalid_number.to_s ).to include("AMB")
 
 	end
 	
