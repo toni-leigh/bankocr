@@ -194,13 +194,17 @@ class AccountNumber
 			output_string += "#{digit.to_s}"
 		end
 
-		if @ambiguous
-			output_string += ' AMB'
+		output_string += if @ambiguous
+			' AMB'
 		else
-			if @legible
-				output_string += ' ERR' unless @valid
+			if @legible 
+				if !@valid
+					' ERR'
+				else
+					''
+				end
 			else
-				output_string += ' ILL'
+				' ILL'
 			end
 		end
 
