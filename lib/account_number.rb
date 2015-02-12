@@ -145,12 +145,11 @@ class AccountNumber
 		end
 	end
 
-	# sets up the Digit array based on an array of Integers, which skips
+	# over-writes the Digit array based on an array of Integers, which skips
 	# the validations for legibility and salvagability
 	def set_from_integers(integer_array)
 		integer_array.each_with_index do |integer,index|
-			@digits[index] = Digit.new;
-			@digits[index].set_from_integer(integer)
+			@digits[index] = Digit.new.set_from_integer(integer);
 		end
 		set_checksum_valid
 		set_legible
@@ -172,12 +171,8 @@ class AccountNumber
 	# builds an integer array from a salvagble number storing it as an alternate
 	def salvage_number
 		alternate_integer_array = []
-		@digits.each_with_index do |digit,index|
-			if (digit.valid?)
-				alternate_integer_array[index] = digit.number
-			else
-				alternate_integer_array[index] = digit.salvage_to
-			end
+		@digits.each do |digit|
+			alternate_integer_array << (digit.valid? ? digit.number : digit.salvage_to)
 		end
 		add_new_alternate(alternate_integer_array)
 	end
