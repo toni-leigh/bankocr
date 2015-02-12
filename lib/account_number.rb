@@ -55,15 +55,15 @@ class AccountNumber
 	end
 
 	def set_salvagable
-		count_salvagables = 0
-		count_valid_digits = 0
+		salvagables = 0
+		valid_digits = 0
 		@digits.each do |digit|
-			count_salvagables += 1 if digit.salvagable?
-			count_valid_digits += 1 if digit.valid?
+			salvagables += 1 if digit.salvagable?
+			valid_digits += 1 if digit.valid?
 		end
 		# counting just one salvagable isn't enough, need eight valids for it to be a truly salvagable
 		# acc number
-		@salvagable = true if count_salvagables == 1 && count_valid_digits == (@account_number_length - 1)
+		@salvagable = true if salvagables == 1 && valid_digits == (@account_number_length - 1)
 	end
 
 	# is the account number legible, are all digits readable? An account 
