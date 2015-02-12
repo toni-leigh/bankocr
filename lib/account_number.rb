@@ -8,6 +8,8 @@ class AccountNumber
 		:salvagable, 
 		:checksum_valid
 
+		
+
 	def initialize(account_number_string = '', account_number_length = 9)
 		@account_number_length = account_number_length
 		@digits = Array.new(@account_number_length)
@@ -19,6 +21,8 @@ class AccountNumber
 		set_from_string if account_number_string.length > 0
 	end
 
+
+
 	# is the account number invlid but have more than one valid alternative
 	# set looks at the count of alternate numbers
 	def ambiguous?
@@ -28,6 +32,8 @@ class AccountNumber
 	def set_ambiguous
 		@ambiguous = true if @alternate_numbers.length > 1
 	end
+
+
 
 	# does the account number pass the checksum validation
 	# set performs checksum
@@ -45,6 +51,8 @@ class AccountNumber
 
 		@checksum_valid = ( checksum % 11 == 0 )
 	end
+
+
 
 	# is the account number salvagable? i.e. does it have error digit with 
 	# just one error in the digit itself
@@ -66,6 +74,8 @@ class AccountNumber
 		@salvagable = true if salvagables == 1 && valid_digits == (@account_number_length - 1)
 	end
 
+
+
 	# is the account number legible, are all digits readable? An account 
 	# number can be illegible and salvagable, or illegible and not salvagable
 	def legible?
@@ -79,6 +89,8 @@ class AccountNumber
 			@legible = false if @digits[(@account_number_length - 1)-i].integer == nil
 		end
 	end
+
+
 
 	# looks at the account number string and extracts the 3x3 charset that
 	# respresents the digit
@@ -94,8 +106,9 @@ class AccountNumber
 		].join('')
 	end
 
+
+
 	# builds an alternate integer array - used for ambiguous account numbers
-	# 
 	def get_alternate_integer_array(new_digit,target_index)
 		integer_array = []
 
@@ -107,6 +120,8 @@ class AccountNumber
 
 		integer_array
 	end
+
+
 
 	# sets up the Digit array based on the string input and validates
 	def set_from_string
@@ -130,6 +145,8 @@ class AccountNumber
 		end
 	end
 
+
+
 	# over-writes the Digit array based on an array of Integers, which skips
 	# the validations for legibility and salvagability
 	def set_from_integers(integer_array)
@@ -139,6 +156,8 @@ class AccountNumber
 		set_checksum_valid
 		set_legible
 	end
+
+
 
 	# looks through the account number and builds alternate numbers, using ambiguous
 	# digits, adding them to the alternate numbers arrays
@@ -153,6 +172,8 @@ class AccountNumber
 		set_ambiguous
 	end
 
+
+
 	# builds an integer array from a salvagble number storing it as an alternate
 	def salvage_number
 		alternate_integer_array = []
@@ -162,6 +183,8 @@ class AccountNumber
 		add_new_alternate(alternate_integer_array)
 	end
 
+
+
 	# creates a new AccountNumber object and adds that to the alternate numbers 
 	# array if it is valid
 	def add_new_alternate(alternate_integer_array)
@@ -170,6 +193,8 @@ class AccountNumber
 
 		@alternate_numbers << alternate_account_number if alternate_account_number.checksum_valid?
 	end
+
+
 
 	# if there is one alternate then apply it else do nothing
 	# also an applied alternate is valid and legible
@@ -181,12 +206,18 @@ class AccountNumber
 		end
 	end
 
+
+
+	# get an error code applicable
 	def error_code
 		return ' AMB' if @ambiguous
 		return ' ILL' if !@legible
 		return ' ERR' if !@checksum_valid
 	end
 
+
+
+	# over-ridden to string method
 	def to_s 
 		output_string = ''
 
