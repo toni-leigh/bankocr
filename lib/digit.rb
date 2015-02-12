@@ -16,9 +16,7 @@ class Digit
 
 	def initialize(string = '')
 		@salvagable = false
-		if (string.length > 0)
-			set_from_string(string)
-		end
+		set_from_string(string) if string.length > 0
 	end
 
 	def set_from_integer(integer)
@@ -37,7 +35,7 @@ class Digit
 	def convert_to_integer
 		@valid = false
 		DIGIT_DATA.each do |integer,data|
-			if (@string == data['string'])
+			if @string == data['string']
 				@integer = integer
 				@valid = true
 			end
@@ -49,7 +47,7 @@ class Digit
 	end
 
 	def check_for_errors	
-		if (!valid?)
+		if !valid?
 			errors = {}
 
 			DIGIT_DATA.each do |valid_digit_index,valid_digit_data|
@@ -59,9 +57,7 @@ class Digit
 			# no single char error can result in two possible digits so we either find
 			# one match with a single error or no matches
 			errors.each do |valid_integer,error_count|
-				if error_count === 1
-					set_salvagable(valid_integer)
-				end
+				set_salvagable(valid_integer) if error_count === 1
 			end
 		end
 	end
@@ -90,10 +86,6 @@ class Digit
 	end
 
 	def to_s
-		if @valid then
-			"#{@integer}"
-		else
-			"?"
-		end
+		@valid ? "#{@integer}" : "?"
 	end
 end
