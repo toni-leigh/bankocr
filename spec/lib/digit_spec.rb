@@ -37,8 +37,8 @@ describe Digit do
 
 	it "should convert any strings for any digit into integers" do
 		Digit::DIGIT_DATA.each do |integer,data|
-			digit = Digit.new(data['string'])
-			expect( digit.number ).to be == integer
+			d = Digit.new(data['string'])
+			expect( d.number ).to be == integer
 		end
 	end
 
@@ -57,9 +57,9 @@ describe Digit do
 		expect( valid_digit.get_alternates ).to be_kind_of (Array)
 
 		Digit::DIGIT_DATA.each do |integer,data|
-			digit = Digit.new(data['string'])
-			expect( digit.get_alternates ).to be_kind_of (Array)
-			expect( digit.get_alternates.length ).to be == data['ambiguities'].length
+			d = Digit.new(data['string'])
+			expect( d.get_alternates ).to be_kind_of (Array)
+			expect( d.get_alternates.length ).to be == data['ambiguities'].length
 		end
 	end
 
