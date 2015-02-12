@@ -3,12 +3,30 @@ require "account_number"
 
 describe AccountNumber do
 
-	let(:account_number) { AccountNumber.new(' _  _  _  _  _  _  _  _  _ | || || || || || || || || ||_||_||_||_||_||_||_||_||_|                           ') }
-	let(:checksum_valid_account_number) { AccountNumber.new(' _  _  _  _  _  _  _  _    | || || || || || || ||_   ||_||_||_||_||_||_||_| _|  |                           ') }
-	let(:invalid_account_number) { AccountNumber.new(' _  _  _  _  _  _  _  _  _   || || || || || || || ||_|  ||_||_||_||_||_||_||_||_|                           ') }
-	let(:salvagable_account_number) { AccountNumber.new('|_  _  _  _  _  _  _  _    | || || || || || || ||_   ||_||_||_||_||_||_||_| _|  |                           ') }
-	let(:illegible_account_number) { AccountNumber.new('||||_  _  _  _  _  _  _  _   || || || || || || || || |  ||_||_||_||_||_||_||_||_|                           ') }
-	let(:ambiguous_checksum_invalid_number) { AccountNumber.new(' _  _  _  _  _  _  _  _  _ |_ |_ |_ |_ |_ |_ |_ |_ |_  _| _| _| _| _| _| _| _| _|                           ') }
+	let(:account_number) 												{ AccountNumber.new(' _  _  _  _  _  _  _  _  _ ' +
+																				 													'| || || || || || || || || |' +
+																				 													'|_||_||_||_||_||_||_||_||_|' +
+																				 													'                           ') }
+	let(:checksum_valid_account_number) 				{ AccountNumber.new(' _  _  _  _  _  _  _  _    ' +
+																					 												'| || || || || || || ||_   |' +
+																					 												'|_||_||_||_||_||_||_| _|  |' +
+																					 												'                           ') }
+	let(:invalid_account_number) 								{ AccountNumber.new(' _  _  _  _  _  _  _  _  _ ' +
+																					 				 								'  || || || || || || || ||_|' +
+																					 				 								'  ||_||_||_||_||_||_||_||_|' +
+																					 				 								'                           ') }
+	let(:salvagable_account_number) 						{ AccountNumber.new('|_  _  _  _  _  _  _  _    ' +
+																					 				 								'| || || || || || || ||_   |' +
+																					 				 								'|_||_||_||_||_||_||_| _|  |' +
+																					 				 								'                           ') }
+	let(:illegible_account_number) 							{ AccountNumber.new('||||_  _  _  _  _  _  _  _ ' +
+																					 				 	  						'  || || || || || || || || |' +
+																					 				 	  						'  ||_||_||_||_||_||_||_||_|' +
+																					 				 	  						'                           ') }
+	let(:ambiguous_checksum_invalid_number) 		{ AccountNumber.new(' _  _  _  _  _  _  _  _  _ ' +
+																					 				 								'|_ |_ |_ |_ |_ |_ |_ |_ |_ ' +
+																					 				 								' _| _| _| _| _| _| _| _| _|' +
+																					 				 								'                           ') }
 
 	it "should have a string that represents the full number of 108 chars" do
 		expect( account_number.account_number_string ).to be_kind_of (String)
