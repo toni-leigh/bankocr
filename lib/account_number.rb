@@ -45,9 +45,8 @@ class AccountNumber
 		checksum = 0;
 
 		(0..(@account_number_length - 1)).each do |i|
-			if @digits[(@account_number_length - 1)-i].number != nil
- 				checksum += (@digits[(@account_number_length - 1)-i].number*(i+1))
- 			end
+			integer = @digits[(@account_number_length - 1) - i].number
+			checksum += (integer * (i + 1)) if integer
 		end
 
 		@checksum_valid = ( checksum % 11 == 0 )
