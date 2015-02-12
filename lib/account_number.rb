@@ -16,11 +16,7 @@ class AccountNumber
 		@account_number_string = account_number_string
 		@ambiguous = false
 		@salvagable = false
-
-		if (account_number_string.length > 0)
-			set_from_string
-		end
-
+		set_from_string if account_number_string.length > 0
 	end
 
 	# is the account number invlid but have more than one valid alternative
@@ -30,9 +26,7 @@ class AccountNumber
 	end
 
 	def set_ambiguous
-		if (@alternate_numbers.length > 1)
-			@ambiguous = true
-		end
+		@ambiguous = true if @alternate_numbers.length > 1
 	end
 
 	# does the account number pass the checksum validation
@@ -64,18 +58,12 @@ class AccountNumber
 		count_salvagables = 0
 		count_valid_digits = 0
 		@digits.each do |digit|
-			if (digit.salvagable?)
-				count_salvagables += 1
-			end
-			if (digit.valid?)
-				count_valid_digits += 1
-			end
+			count_salvagables += 1 if digit.salvagable?
+			count_valid_digits += 1 if (digit.valid?)
 		end
 		# counting just one salvagable isn't enough, need eight valids for it to be a truly salvagable
 		# acc number
-		if count_salvagables == 1 && count_valid_digits == (@account_number_length - 1)
-			@salvagable = true
-		end
+		@salvagable = true if count_salvagables == 1 && count_valid_digits == (@account_number_length - 1)
 	end
 
 	# is the account number legible, are all digits readable? An account 
@@ -88,9 +76,7 @@ class AccountNumber
 		@legible = true
 
 		(0..(@account_number_length - 1)).each do |i|
-			if @digits[(@account_number_length - 1)-i].integer == nil
-				@legible = false
- 			end
+			@legible = false if @digits[(@account_number_length - 1)-i].integer == nil
 		end
 	end
 
@@ -182,9 +168,7 @@ class AccountNumber
 		alternate_account_number = AccountNumber.new
 		alternate_account_number.set_from_integers(alternate_integer_array)
 
-		if (alternate_account_number.checksum_valid?)
-			@alternate_numbers << alternate_account_number
-		end
+		@alternate_numbers << alternate_account_number if (alternate_account_number.checksum_valid?)
 	end
 
 	# if there is one alternate then apply it else do nothing
