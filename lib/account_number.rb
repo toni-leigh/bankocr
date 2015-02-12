@@ -59,7 +59,7 @@ class AccountNumber
 		count_valid_digits = 0
 		@digits.each do |digit|
 			count_salvagables += 1 if digit.salvagable?
-			count_valid_digits += 1 if (digit.valid?)
+			count_valid_digits += 1 if digit.valid?
 		end
 		# counting just one salvagable isn't enough, need eight valids for it to be a truly salvagable
 		# acc number
@@ -119,12 +119,12 @@ class AccountNumber
 
 		set_salvagable unless legible?
 
-		if (legible? && !checksum_valid?)
+		if legible? && !checksum_valid?
 			set_alternates
 			apply_alternate
 		end
 
-		if (salvagable?)
+		if salvagable?
 			salvage_number
 			apply_alternate
 		end
@@ -168,13 +168,13 @@ class AccountNumber
 		alternate_account_number = AccountNumber.new
 		alternate_account_number.set_from_integers(alternate_integer_array)
 
-		@alternate_numbers << alternate_account_number if (alternate_account_number.checksum_valid?)
+		@alternate_numbers << alternate_account_number if alternate_account_number.checksum_valid?
 	end
 
 	# if there is one alternate then apply it else do nothing
 	# also an applied alternate is valid and legible
 	def apply_alternate
-		if (@alternate_numbers.length == 1)
+		if @alternate_numbers.length == 1
 			@digits = @alternate_numbers[0].digits
 			@checksum_valid = true
 			@legible = true
@@ -197,7 +197,7 @@ class AccountNumber
 		output_string += error_code || ''
 
 		alternates = []
-		if (@alternate_numbers.length > 1)
+		if @alternate_numbers.length > 1
 			@alternate_numbers.each do |alternate|
 				alternates << alternate.to_s
 			end
