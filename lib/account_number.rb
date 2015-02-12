@@ -198,6 +198,12 @@ class AccountNumber
 		end
 	end
 
+	def error_code
+		return ' AMB' if @ambiguous
+		return ' ILL' if !@legible
+		return ' ERR' if !@checksum_valid
+	end
+
 	def to_s 
 		output_string = ''
 
@@ -205,28 +211,14 @@ class AccountNumber
 			output_string += "#{digit.to_s}"
 		end
 
-		output_string += if @ambiguous
-			' AMB'
-		else
-			if @legible 
-				if !@checksum_valid
-					' ERR'
-				else
-					''
-				end
-			else
-				' ILL'
-			end
-		end
+		output_string += error_code || ''
 
 		alternates = []
 		if (@alternate_numbers.length > 1)
-			output_string += ' ['
 			@alternate_numbers.each do |alternate|
 				alternates << alternate.to_s
 			end
-			output_string += alternates.join(', ')
-			output_string += ']'
+			output_string += '[' + alternates.join(', ') + ']'
 		end
 
 		output_string
