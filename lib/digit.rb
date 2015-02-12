@@ -1,5 +1,5 @@
 class Digit
-	attr_accessor :number, :salvage_to, :salvagable, :string, :string_representations, :valid
+	attr_accessor :integer, :salvage_to, :salvagable, :string, :string_representations, :valid
 
 	DIGIT_DATA = {
 		0 => { 'string' => ' _ | ||_|', 'ambiguities' => [8] },
@@ -22,8 +22,8 @@ class Digit
 	end
 
 	def set_from_integer(integer)
-		@number = integer
-		@string = DIGIT_DATA[@number]
+		@integer = integer
+		@string = DIGIT_DATA[@integer]
 		@valid = true
 		self
 	end
@@ -38,14 +38,14 @@ class Digit
 		@valid = false
 		DIGIT_DATA.each do |integer,data|
 			if (@string == data['string'])
-				@number = integer
+				@integer = integer
 				@valid = true
 			end
 		end
 	end
 
 	def get_alternates
-		DIGIT_DATA[@number]['ambiguities']
+		DIGIT_DATA[@integer]['ambiguities']
 	end
 
 	def check_for_errors	
@@ -91,7 +91,7 @@ class Digit
 
 	def to_s
 		if @valid then
-			"#{@number}"
+			"#{@integer}"
 		else
 			"?"
 		end

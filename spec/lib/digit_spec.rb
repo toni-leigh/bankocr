@@ -20,11 +20,11 @@ describe Digit do
 	}
 
 	it "should have an integer value" do
-		expect( valid_digit.number ).to be_kind_of (Integer)
+		expect( valid_digit.integer ).to be_kind_of (Integer)
 	end
 
 	it "should be in the range of 0 and 9" do		
-		expect( valid_digit.number ).to be_between(0,9)
+		expect( valid_digit.integer ).to be_between(0,9)
 	end
 
 	it "should have a string representation" do
@@ -38,7 +38,7 @@ describe Digit do
 	it "should convert any strings for any digit into integers" do
 		Digit::DIGIT_DATA.each do |integer,data|
 			d = Digit.new(data['string'])
-			expect( d.number ).to be == integer
+			expect( d.integer ).to be == integer
 		end
 	end
 

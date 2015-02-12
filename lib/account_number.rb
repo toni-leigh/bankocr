@@ -45,7 +45,7 @@ class AccountNumber
 		checksum = 0;
 
 		(0..(@account_number_length - 1)).each do |i|
-			integer = @digits[(@account_number_length - 1) - i].number
+			integer = @digits[(@account_number_length - 1) - i].integer
 			checksum += (integer * (i + 1)) if integer
 		end
 
@@ -88,7 +88,7 @@ class AccountNumber
 		@legible = true
 
 		(0..(@account_number_length - 1)).each do |i|
-			if @digits[(@account_number_length - 1)-i].number == nil
+			if @digits[(@account_number_length - 1)-i].integer == nil
 				@legible = false
  			end
 		end
@@ -114,7 +114,7 @@ class AccountNumber
 		integer_array = []
 
 		@digits.each do |digit|
-			integer_array << digit.number
+			integer_array << digit.integer
 		end
 
 		integer_array[target_index] = new_digit
@@ -171,7 +171,7 @@ class AccountNumber
 	def salvage_number
 		alternate_integer_array = []
 		@digits.each do |digit|
-			alternate_integer_array << (digit.valid? ? digit.number : digit.salvage_to)
+			alternate_integer_array << (digit.valid? ? digit.integer : digit.salvage_to)
 		end
 		add_new_alternate(alternate_integer_array)
 	end

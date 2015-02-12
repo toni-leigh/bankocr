@@ -39,7 +39,7 @@ describe AccountNumber do
 
 	it "should convert the initial string into 9 Digits with valid interger numbers stored" do
 		(0..8).to_a.each do |index|
-			expect(number.digits[index].number).to be_kind_of (Integer)
+			expect(number.digits[index].integer).to be_kind_of (Integer)
 		end
 	end
 
