@@ -54,7 +54,7 @@ class AccountNumber
 
 	# is the account number salvagable? i.e. does it have error digit with 
 	# just one error in the digit itself
-	# set checks Digit.salvagbale status and also makes sure just one Digit
+	# set method checks Digit.salvagbale status and also makes sure just one Digit
 	# is invalid
 	def salvagable?
 		@salvagable 
@@ -71,7 +71,7 @@ class AccountNumber
 				count_valid_digits += 1
 			end
 		end
-		# counting one salvagable isn't enough, need eight valids for it to be a truly salvagable
+		# counting just one salvagable isn't enough, need eight valids for it to be a truly salvagable
 		# acc number
 		if count_salvagables == 1 && count_valid_digits == (@account_number_length - 1)
 			@salvagable = true
