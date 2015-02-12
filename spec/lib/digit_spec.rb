@@ -53,11 +53,14 @@ describe Digit do
 		expect( illegible_digit.to_s ).to be =='?'
 	end
 
-	it "should return possible alternatives if it can be ambiguous" do
-		expect( subject.set_from_integer(0).get_alternates ).to be_kind_of (Array)
-		expect( subject.set_from_integer(5).get_alternates.length ).to be == 2
-		expect( subject.set_from_integer(9).get_alternates.length ).to be == 3
-		expect( subject.set_from_integer(4).get_alternates.length ).to be == 0
+	it "should know what it's alternatives are if it's valid" do		
+		expect( valid_digit.get_alternates ).to be_kind_of (Array)
+
+		Digit::DIGIT_DATA.each do |integer,data|
+			digit = Digit.new(data['string'])
+			expect( digit.get_alternates ).to be_kind_of (Array)
+			expect( digit.get_alternates.length ).to be == data['ambiguities'].length
+		end
 	end
 
 	it "should know if it's salvagable or not, i.e. if there's just one char difference between itself and a valid string" do
