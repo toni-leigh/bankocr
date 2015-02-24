@@ -1,19 +1,20 @@
 class AccountNumber
 
-	attr_accessor :account_number_length, 
-		:account_number_string, 
-		:alternate_numbers, 
-		:ambiguous, 
-		:digits, 
-		:salvagable, 
+	attr_accessor :account_number_length,
+		:account_number_string,
+		:alternate_numbers,
+		:ambiguous,
+		:digits,
+		:legible,
+		:salvagable,
 		:checksum_valid
 
-		
+
 
 	def initialize(account_number_string = '', account_number_length = 9)
 		@account_number_length = account_number_length
-		@digits = Array.new(@account_number_length)
-		@alternate_numbers = []		
+		@digits = Array.new(account_number_length)
+		@alternate_numbers = []
 		@alternate = false
 		@account_number_string = account_number_string
 		@ambiguous = false
@@ -26,11 +27,11 @@ class AccountNumber
 	# is the account number invlid but have more than one valid alternative
 	# set looks at the count of alternate numbers
 	def ambiguous?
-		@ambiguous
+		ambiguous
 	end
 
 	def set_ambiguous
-		@ambiguous = true if @alternate_numbers.length > 1
+		@ambiguous = true if alternate_numbers.length > 1
 	end
 
 
@@ -38,14 +39,14 @@ class AccountNumber
 	# does the account number pass the checksum validation
 	# set performs checksum
 	def checksum_valid?
-		@checksum_valid 
+		checksum_valid
 	end
 
 	def set_checksum_valid
 		checksum = 0;
 
-		(0..(@account_number_length - 1)).each do |i|
-			integer = @digits[(@account_number_length - 1) - i].integer
+		(0..(account_number_length - 1)).each do |i|
+			integer = digits[(account_number_length - 1) - i].integer
 			checksum += (integer * (i + 1)) if integer
 		end
 
@@ -54,39 +55,39 @@ class AccountNumber
 
 
 
-	# is the account number salvagable? i.e. does it have error digit with 
+	# is the account number salvagable? i.e. does it have error digit with
 	# just one error in the digit itself
 	# set method checks Digit.salvagbale status and also makes sure just one Digit
 	# is invalid
 	def salvagable?
-		@salvagable 
+		salvagable
 	end
 
 	def set_salvagable
 		salvagables = 0
 		valid_digits = 0
-		@digits.each do |digit|
+		digits.each do |digit|
 			salvagables += 1 if digit.salvagable?
 			valid_digits += 1 if digit.valid?
 		end
 		# counting just one salvagable isn't enough, need eight valids for it to be a truly salvagable
 		# acc number
-		@salvagable = true if salvagables == 1 && valid_digits == (@account_number_length - 1)
+		@salvagable = true if salvagables == 1 && valid_digits == (account_number_length - 1)
 	end
 
 
 
-	# is the account number legible, are all digits readable? An account 
+	# is the account number legible, are all digits readable? An account
 	# number can be illegible and salvagable, or illegible and not salvagable
 	def legible?
-		@legible 
+		legible
 	end
 
 	def set_legible
 		@legible = true
 
-		(0..(@account_number_length - 1)).each do |i|
-			@legible = false if @digits[(@account_number_length - 1)-i].integer == nil
+		(0..(account_number_length - 1)).each do |i|
+			@legible = false if digits[(account_number_length - 1)-i].integer == nil
 		end
 	end
 
@@ -96,13 +97,13 @@ class AccountNumber
 	# respresents the digit
 	#
 	# position - Integer that represents the position, 0 - (@account_number_length - 1) to target
-	# 
+	#
 	# return - @account_number_length char string that represents the digit
 	def get_digit_string(position)
-		[ 
-			@account_number_string[position * 3,3],
-			@account_number_string[position * 3 + (@account_number_length * 3),3],
-			@account_number_string[position * 3 + (@account_number_length * 3 * 2),3]
+		[
+			account_number_string[position * 3,3],
+			account_number_string[position * 3 + (account_number_length * 3),3],
+			account_number_string[position * 3 + (account_number_length * 3 * 2),3]
 		].join('')
 	end
 
@@ -112,7 +113,7 @@ class AccountNumber
 	def get_alternate_integer_array(new_digit,target_index)
 		integer_array = []
 
-		@digits.each do |digit|
+		digits.each do |digit|
 			integer_array << digit.integer
 		end
 
@@ -125,7 +126,7 @@ class AccountNumber
 
 	# sets up the Digit array based on the string input and validates
 	def set_from_string
-		@digits.each_with_index do |digit,index|
+		digits.each_with_index do |digit,index|
 			@digits[index] = Digit.new(get_digit_string(index))
 		end
 
@@ -161,8 +162,8 @@ class AccountNumber
 
 	# looks through the account number and builds alternate numbers, using ambiguous
 	# digits, adding them to the alternate numbers arrays
-	def set_alternates 
-		@digits.each_with_index do |digit,index|
+	def set_alternates
+		digits.each_with_index do |digit,index|
 			digit.get_alternates.to_a.each do |alternate_digit|
 				alternate_integer_array = get_alternate_integer_array(alternate_digit,index)
 				add_new_alternate(alternate_integer_array)
@@ -177,7 +178,7 @@ class AccountNumber
 	# builds an integer array from a salvagble number storing it as an alternate
 	def salvage_number
 		alternate_integer_array = []
-		@digits.each do |digit|
+		digits.each do |digit|
 			alternate_integer_array << (digit.valid? ? digit.integer : digit.salvage_to)
 		end
 		add_new_alternate(alternate_integer_array)
@@ -185,7 +186,7 @@ class AccountNumber
 
 
 
-	# creates a new AccountNumber object and adds that to the alternate numbers 
+	# creates a new AccountNumber object and adds that to the alternate numbers
 	# array if it is valid
 	def add_new_alternate(alternate_integer_array)
 		alternate_account_number = AccountNumber.new
@@ -199,8 +200,8 @@ class AccountNumber
 	# if there is one alternate then apply it else do nothing
 	# also an applied alternate is valid and legible
 	def apply_alternate
-		if @alternate_numbers.length == 1
-			@digits = @alternate_numbers[0].digits
+		if alternate_numbers.length == 1
+			@digits = alternate_numbers[0].digits
 			@checksum_valid = true
 			@legible = true
 		end
@@ -210,26 +211,26 @@ class AccountNumber
 
 	# get an error code applicable
 	def error_code
-		return ' AMB' if @ambiguous
-		return ' ILL' if !@legible
-		return ' ERR' if !@checksum_valid
+		return ' AMB' if ambiguous
+		return ' ILL' if !legible
+		return ' ERR' if !checksum_valid
 	end
 
 
 
 	# over-ridden to string method
-	def to_s 
+	def to_s
 		output_string = ''
 
-		@digits.each do |digit|
+		digits.each do |digit|
 			output_string += "#{digit.to_s}"
 		end
 
 		output_string += error_code || ''
 
 		alternates = []
-		if @alternate_numbers.length > 1
-			@alternate_numbers.each do |alternate|
+		if alternate_numbers.length > 1
+			alternate_numbers.each do |alternate|
 				alternates << alternate.to_s
 			end
 			output_string += '[' + alternates.join(', ') + ']'

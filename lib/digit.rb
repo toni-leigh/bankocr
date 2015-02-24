@@ -37,7 +37,7 @@ class Digit
 	def set_from_string(string)
 		@string = string
 		convert_to_integer
-		check_for_errors		
+		check_for_errors
 	end
 
 
@@ -46,7 +46,7 @@ class Digit
 	def convert_to_integer
 		@valid = false
 		DIGIT_DATA.each do |integer,data|
-			if @string == data['string']
+			if string == data['string']
 				@integer = integer
 				@valid = true
 			end
@@ -57,14 +57,14 @@ class Digit
 
 	# gets the possible ambiguities for a valid digit from the class constant
 	def get_alternates
-		DIGIT_DATA[@integer]['ambiguities']
+		DIGIT_DATA[integer]['ambiguities']
 	end
 
 
 
 	# checks the string characters for errors if it isn't valid, choosing which valid digit
 	# the error digit is salvagble to (if any)
-	def check_for_errors	
+	def check_for_errors
 		if !valid?
 			errors = {}
 
@@ -82,13 +82,13 @@ class Digit
 
 
 
-	# counts the number of comparison errors between a self.string and a valid string, returning 
+	# counts the number of comparison errors between a self.string and a valid string, returning
 	# the number of errors between the two
 	def count_comparison_errors(valid_to_compare_to)
 		errors = 0
 
 		valid_to_compare_to.split('').each_with_index do |char,index|
-			errors += 1 unless char == @string.split('')[index]
+			errors += 1 unless char == string.split('')[index]
 		end
 
 		errors
@@ -106,20 +106,20 @@ class Digit
 
 	# is it salvagable?
 	def salvagable?
-		@salvagable
+		salvagable
 	end
 
 
 
 	# is it valid?
 	def valid?
-		@valid
+		valid
 	end
 
 
 
 	# over-ridden to string method
 	def to_s
-		@valid ? "#{@integer}" : "?"
+		valid ? "#{integer}" : "?"
 	end
 end
