@@ -3,26 +3,36 @@ require "account_number"
 
 describe AccountNumber do
 
-  let(:number)                                 { AccountNumber.new(' _  _  _  _  _  _  _  _    ' +
-                                                                   '| || || || || || || ||_   |' +
-                                                                   '|_||_||_||_||_||_||_| _|  |' +
-                                                                   '                           ') }
-  let(:checksum_invalid_number)               { AccountNumber.new(' _  _  _  _  _  _  _  _  _ ' +
-                                                                  '  || || || || || || || ||_|' +
-                                                                  '  ||_||_||_||_||_||_||_||_|' +
-                                                                  '                           ') }
-  let(:salvagable_number)                     { AccountNumber.new('|_  _  _  _  _  _  _  _    ' +
-                                                                  '| || || || || || || ||_   |' +
-                                                                  '|_||_||_||_||_||_||_| _|  |' +
-                                                                  '                           ') }
-  let(:illegible_number)                       { AccountNumber.new('||||_  _  _  _  _  _  _  _ ' +
-                                                                  '  || || || || || || || || |' +
-                                                                  '  ||_||_||_||_||_||_||_||_|' +
-                                                                  '                           ') }
-  let(:ambiguous_checksum_invalid_number)     { AccountNumber.new(' _  _  _  _  _  _  _  _  _ ' +
-                                                                  '|_ |_ |_ |_ |_ |_ |_ |_ |_ ' +
-                                                                  ' _| _| _| _| _| _| _| _| _|' +
-                                                                  '                           ') }
+  let(:number) do
+    AccountNumber.new(' _  _  _  _  _  _  _  _    ' +
+                      '| || || || || || || ||_   |' +
+                      '|_||_||_||_||_||_||_| _|  |' +
+                      '                           ')
+  end
+  let(:checksum_invalid_number) do
+    AccountNumber.new(' _  _  _  _  _  _  _  _  _ ' +
+                      '  || || || || || || || ||_|' +
+                      '  ||_||_||_||_||_||_||_||_|' +
+                      '                           ')
+  end
+  let(:salvagable_number) do
+    AccountNumber.new('|_  _  _  _  _  _  _  _    ' +
+                      '| || || || || || || ||_   |' +
+                      '|_||_||_||_||_||_||_| _|  |' +
+                      '                           ')
+  end
+  let(:illegible_number) do
+    AccountNumber.new('||||_  _  _  _  _  _  _  _ ' +
+                      '  || || || || || || || || |' +
+                      '  ||_||_||_||_||_||_||_||_|' +
+                      '                           ')
+  end
+  let(:ambiguous_checksum_invalid_number) do
+    AccountNumber.new(' _  _  _  _  _  _  _  _  _ ' +
+                      '|_ |_ |_ |_ |_ |_ |_ |_ |_ ' +
+                      ' _| _| _| _| _| _| _| _| _|' +
+                      '                           ')
+  end
 
   it "should have a string that represents the full number of 108 chars" do
     expect( number.account_number_string ).to be_kind_of (String)
@@ -37,13 +47,15 @@ describe AccountNumber do
     end
   end
 
-  it "should convert the initial string into 9 Digits with valid interger numbers stored" do
+  it "should convert the initial string into 9 Digits with valid interger " +
+     "numbers stored" do
     (0..8).to_a.each do |index|
       expect(number.digits[index].integer).to be_kind_of (Integer)
     end
   end
 
-  it "should have a to_s method that returns a human readable version of the converted account number" do
+  it "should have a to_s method that returns a human readable version of " +
+     "the converted account number" do
     expect( number.to_s.length ).to be == 9
     expect( number.to_s ).to be == '000000051'
   end
@@ -68,7 +80,8 @@ describe AccountNumber do
     expect( checksum_invalid_number.to_s ).to include("ERR")
   end
 
-  it "should know if it is salvagable, i.e. if it has one and one only illegible digit and that digit only has one illegible character" do
+  it "should know if it is salvagable, i.e. if it has one and one only " +
+     "illegible digit and that digit only has one illegible character" do
     expect( number.salvagable ).not_to eq(true)
     expect( salvagable_number.salvagable ).to eq(true)
     expect( illegible_number.salvagable ).not_to eq(true)
@@ -78,12 +91,14 @@ describe AccountNumber do
     expect( number.alternate_numbers ).to be_kind_of (Array)
   end
 
-  it "should have an alternative array of more than one number if it's an ambiguous error" do
+  it "should have an alternative array of more than one number if it's " +
+     "an ambiguous error" do
     ambiguous_checksum_invalid_number.set_alternates
     expect( ambiguous_checksum_invalid_number.alternate_numbers.length ).to be > 1
   end
 
-  it "should have exactly one alternative if it is an ILL that is actually salvagable" do
+  it "should have exactly one alternative if it is an ILL that is actually " +
+     "salvagable" do
     expect( salvagable_number.alternate_numbers.length ).to be == 1
   end
 

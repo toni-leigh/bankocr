@@ -63,7 +63,8 @@ describe Digit do
     end
   end
 
-  it "should know if it's salvagable or not, i.e. if there's just one char difference between itself and a valid string" do
+  it "should know if it's salvagable or not, i.e. if there's just one char " +
+     "difference between itself and a valid string" do
     expect( salvagable_digit.salvagable ).to eq(true)
     expect( illegible_digit.salvagable ).not_to eq(true)
   end

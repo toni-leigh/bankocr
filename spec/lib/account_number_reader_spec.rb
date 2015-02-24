@@ -12,7 +12,8 @@ describe AccountNumberReader do
   it "should create account number objects" do
     expect( subject.account_numbers ).to be_kind_of (Array)
     expect( subject.account_numbers.length ).to be > 0
-    # this test checks the resulting number of account numbers reflects the number expected from the file size
+    # this test checks the resulting number of account numbers
+    # reflects the number expected from the file size
     expect( subject.account_numbers_string.lines.to_a.length ).to be == subject.account_numbers.length * 4
   end
 
