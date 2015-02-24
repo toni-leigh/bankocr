@@ -3,27 +3,27 @@ require "digit"
 
 describe Digit do
 
-	let(:valid_digit) { 
+	let(:valid_digit) {
 		Digit.new(' _ ' +
 						  '| |' +
-						  '|_|') 
-	}  
-	let(:salvagable_digit) { 
+						  '|_|')
+	}
+	let(:salvagable_digit) {
 		Digit.new('|_ ' +
 						  '| |' +
-						  '|_|') 
-	} 
-	let(:illegible_digit) { 
+						  '|_|')
+	}
+	let(:illegible_digit) {
 		Digit.new('|||' +
 						  '|||' +
-						  '|_|') 
+						  '|_|')
 	}
 
 	it "should have an integer value" do
 		expect( valid_digit.integer ).to be_kind_of (Integer)
 	end
 
-	it "should be in the range of 0 and 9" do		
+	it "should be in the range of 0 and 9" do
 		expect( valid_digit.integer ).to be_between(0,9)
 	end
 
@@ -53,7 +53,7 @@ describe Digit do
 		expect( illegible_digit.to_s ).to be =='?'
 	end
 
-	it "should know what it's alternatives are if it's valid" do		
+	it "should know what it's alternatives are if it's valid" do
 		expect( valid_digit.get_alternates ).to be_kind_of (Array)
 
 		Digit::DIGIT_DATA.each do |integer,data|
