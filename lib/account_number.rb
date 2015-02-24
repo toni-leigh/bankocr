@@ -4,10 +4,10 @@ class AccountNumber
 		:account_number_string,
 		:alternate_numbers,
 		:ambiguous,
+		:checksum_valid,
 		:digits,
 		:legible,
-		:salvagable,
-		:checksum_valid
+		:salvagable
 
 	alias_method :ambiguous?, :ambiguous
 	alias_method :legible?, :legible

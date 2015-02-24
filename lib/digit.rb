@@ -1,5 +1,10 @@
 class Digit
-	attr_accessor :integer, :salvage_to, :salvagable, :string, :string_representations, :valid
+	attr_accessor :integer,
+		:salvage_to,
+		:salvagable,
+		:string,
+		:string_representations,
+		:valid
 
 	alias_method :valid?, :valid
 	alias_method :salvagable?, :salvagable
