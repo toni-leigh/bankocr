@@ -1,6 +1,9 @@
 class Digit
 	attr_accessor :integer, :salvage_to, :salvagable, :string, :string_representations, :valid
 
+	alias_method :valid?, :valid
+	alias_method :salvagable?, :salvagable
+
 	DIGIT_DATA = {
 		0 => { 'string' => ' _ | ||_|', 'ambiguities' => [8] },
 		1 => { 'string' => '     |  |', 'ambiguities' => [7] },
@@ -100,20 +103,6 @@ class Digit
 	def set_salvagable(salvage_to_digit)
 		@salvage_to = salvage_to_digit
 		@salvagable = true
-	end
-
-
-
-	# is it salvagable?
-	def salvagable?
-		salvagable
-	end
-
-
-
-	# is it valid?
-	def valid?
-		valid
 	end
 
 

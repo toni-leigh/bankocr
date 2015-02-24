@@ -9,6 +9,11 @@ class AccountNumber
 		:salvagable,
 		:checksum_valid
 
+	alias_method :ambiguous?, :ambiguous
+	alias_method :legible?, :legible
+	alias_method :salvagable?, :salvagable
+	alias_method :checksum_valid?, :checksum_valid
+
 
 
 	def initialize(account_number_string = '', account_number_length = 9)
@@ -26,10 +31,6 @@ class AccountNumber
 
 	# is the account number invlid but have more than one valid alternative
 	# set looks at the count of alternate numbers
-	def ambiguous?
-		ambiguous
-	end
-
 	def set_ambiguous
 		@ambiguous = true if alternate_numbers.length > 1
 	end
@@ -37,11 +38,6 @@ class AccountNumber
 
 
 	# does the account number pass the checksum validation
-	# set performs checksum
-	def checksum_valid?
-		checksum_valid
-	end
-
 	def set_checksum_valid
 		checksum = 0;
 
@@ -59,10 +55,6 @@ class AccountNumber
 	# just one error in the digit itself
 	# set method checks Digit.salvagbale status and also makes sure just one Digit
 	# is invalid
-	def salvagable?
-		salvagable
-	end
-
 	def set_salvagable
 		salvagables = 0
 		valid_digits = 0
@@ -79,10 +71,6 @@ class AccountNumber
 
 	# is the account number legible, are all digits readable? An account
 	# number can be illegible and salvagable, or illegible and not salvagable
-	def legible?
-		legible
-	end
-
 	def set_legible
 		@legible = true
 
