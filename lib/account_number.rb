@@ -9,11 +9,6 @@ class AccountNumber
     :legible,
     :salvagable
 
-  alias_method :ambiguous?, :ambiguous
-  alias_method :legible?, :legible
-  alias_method :salvagable?, :salvagable
-  alias_method :checksum_valid?, :checksum_valid
-
 
 
   def initialize(account_number_string = '', account_number_length = 9)
@@ -51,7 +46,7 @@ class AccountNumber
 
 
 
-  # is the account number salvagable? i.e. does it have error digit with
+  # is the account number salvagable i.e. does it have error digit with
   # just one error in the digit itself
   # set method checks Digit.salvagbale status and also makes sure just one Digit
   # is invalid
@@ -59,8 +54,8 @@ class AccountNumber
     salvagables = 0
     valid_digits = 0
     digits.each do |digit|
-      salvagables += 1 if digit.salvagable?
-      valid_digits += 1 if digit.valid?
+      salvagables += 1 if digit.salvagable
+      valid_digits += 1 if digit.valid
     end
     # counting just one salvagable isn't enough, need eight valids for it to be a truly salvagable
     # acc number
@@ -121,14 +116,14 @@ class AccountNumber
     set_checksum_valid
     set_legible
 
-    set_salvagable unless legible?
+    set_salvagable unless legible
 
-    if legible? && !checksum_valid?
+    if legible && !checksum_valid
       set_alternates
       apply_alternate
     end
 
-    if salvagable?
+    if salvagable
       salvage_number
       apply_alternate
     end
@@ -167,7 +162,7 @@ class AccountNumber
   def salvage_number
     alternate_integer_array = []
     digits.each do |digit|
-      alternate_integer_array << (digit.valid? ? digit.integer : digit.salvage_to)
+      alternate_integer_array << (digit.valid ? digit.integer : digit.salvage_to)
     end
     add_new_alternate(alternate_integer_array)
   end
@@ -180,7 +175,7 @@ class AccountNumber
     alternate_account_number = AccountNumber.new
     alternate_account_number.set_from_integers(alternate_integer_array)
 
-    @alternate_numbers << alternate_account_number if alternate_account_number.checksum_valid?
+    @alternate_numbers << alternate_account_number if alternate_account_number.checksum_valid
   end
 
 

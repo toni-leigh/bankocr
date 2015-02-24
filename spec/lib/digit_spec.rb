@@ -43,8 +43,8 @@ describe Digit do
   end
 
   it "should know whether or not it's string represents a valid integer" do
-    expect( valid_digit ).to be_valid
-    expect( illegible_digit ).not_to be_valid
+    expect( valid_digit.valid ).to eq(true)
+    expect( illegible_digit.valid ).not_to eq(true)
   end
 
   it "should output itself as a char, including a '?' if it is invalid" do
@@ -64,8 +64,8 @@ describe Digit do
   end
 
   it "should know if it's salvagable or not, i.e. if there's just one char difference between itself and a valid string" do
-    expect( salvagable_digit ).to be_salvagable
-    expect( illegible_digit ).not_to be_salvagable
+    expect( salvagable_digit.salvagable ).to eq(true)
+    expect( illegible_digit.salvagable ).not_to eq(true)
   end
 
   it "should return a valid number if it is salvagable" do

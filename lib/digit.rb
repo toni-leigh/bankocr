@@ -6,8 +6,7 @@ class Digit
     :string_representations,
     :valid
 
-  alias_method :valid?, :valid
-  alias_method :salvagable?, :salvagable
+
 
   DIGIT_DATA = {
     0 => { 'string' => ' _ | ||_|', 'ambiguities' => [8] },
@@ -73,7 +72,7 @@ class Digit
   # checks the string characters for errors if it isn't valid, choosing which valid digit
   # the error digit is salvagble to (if any)
   def check_for_errors
-    if !valid?
+    if !valid
       errors = {}
 
       DIGIT_DATA.each do |valid_digit_index,valid_digit_data|

@@ -49,8 +49,8 @@ describe AccountNumber do
   end
 
   it "should checks its legibility by looking for invalid digits" do
-    expect( number ).to be_legible
-    expect( illegible_number ).not_to be_legible
+    expect( number.legible ).to eq(true)
+    expect( illegible_number.legible ).not_to eq(true)
   end
 
   it "should have ILL in to_s return if it is illegible" do
@@ -59,8 +59,8 @@ describe AccountNumber do
   end
 
   it "should validate itself by performing a checksum" do
-    expect( number ).to be_checksum_valid
-    expect( checksum_invalid_number ).not_to be_checksum_valid
+    expect( number.checksum_valid ).to eq(true)
+    expect( checksum_invalid_number.checksum_valid ).not_to eq(true)
   end
 
   it "should have ERR in to_s return if it fails the checksum" do
@@ -69,9 +69,9 @@ describe AccountNumber do
   end
 
   it "should know if it is salvagable, i.e. if it has one and one only illegible digit and that digit only has one illegible character" do
-    expect( number ).not_to be_salvagable
-    expect( salvagable_number ).to be_salvagable
-    expect( illegible_number ).not_to be_salvagable
+    expect( number.salvagable ).not_to eq(true)
+    expect( salvagable_number.salvagable ).to eq(true)
+    expect( illegible_number.salvagable ).not_to eq(true)
   end
 
   it "should have an array of alternative numbers" do
@@ -88,9 +88,9 @@ describe AccountNumber do
   end
 
   it "should check it's ambiguity" do
-    expect( number ).not_to be_ambiguous
-    expect( illegible_number ).not_to be_ambiguous
-    expect( ambiguous_checksum_invalid_number ).to be_ambiguous
+    expect( number.ambiguous ).not_to eq(true)
+    expect( illegible_number.ambiguous ).not_to eq(true)
+    expect( ambiguous_checksum_invalid_number.ambiguous ).to eq(true)
   end
 
   it "should have AMB in to_s return if it is ambiguous" do
