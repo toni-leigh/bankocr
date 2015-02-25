@@ -33,7 +33,7 @@ class Digit
   # directly set a Digit using an actual integer
   def set_from_integer(integer)
     @integer = integer
-    @string = DIGIT_DATA[@integer]
+    @string = DIGIT_DATA[integer]
     @valid = true
     self
   end
