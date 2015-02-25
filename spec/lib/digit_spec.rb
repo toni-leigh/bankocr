@@ -3,21 +3,21 @@ require "digit"
 
 describe Digit do
 
-  let(:valid_digit) {
+  let(:valid_digit) do
     Digit.new(' _ ' +
               '| |' +
               '|_|')
-  }
-  let(:salvagable_digit) {
+  end
+  let(:salvagable_digit) do
     Digit.new('|_ ' +
               '| |' +
               '|_|')
-  }
-  let(:illegible_digit) {
+  end
+  let(:illegible_digit) do
     Digit.new('|||' +
               '|||' +
               '|_|')
-  }
+  end
 
   it "should have an integer value" do
     expect( valid_digit.integer ).to be_kind_of (Integer)
