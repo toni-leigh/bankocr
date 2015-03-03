@@ -8,6 +8,11 @@ class Digit
 
 
 
+  # width of the striung representation of the digit
+  DIGIT_WIDTH = 3
+
+
+
   DIGIT_DATA = {
     0 => { 'string' => ' _ | ||_|', 'ambiguities' => [8] },
     1 => { 'string' => '     |  |', 'ambiguities' => [7] },
