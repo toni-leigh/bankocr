@@ -83,11 +83,7 @@ class AccountNumber
   #
   # return - @account_number_length char string that represents the digit
   def get_digit_string(position)
-    [
-      account_number_string[position * 3,3],
-      account_number_string[position * 3 + (account_number_length * 3),3],
-      account_number_string[position * 3 + (account_number_length * 3 * 2),3]
-    ].join('')
+    (0..2).map { |row_num| account_number_string[position * 3 + (account_number_length * 3 * row_num), 3] }.join('')
   end
 
 
